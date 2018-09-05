@@ -5,7 +5,7 @@ it offers the user the opportunity to replace his usual foods with others that a
 
 For this, the user must launch the application in a console or terminal with the command 
 
-_python3 openfood.py_
+`python3 openfood.py`
 
 the application loads data into a database (Mysql), retrieved via the *openfoodfact API*
 the extracted data will then allow:
