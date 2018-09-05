@@ -23,3 +23,4 @@ the food with the best nutriscore is displayed with:
 - a link to the openfoodfacts website
 
 The application subsequently proposes to the user to record or not the result of his search.
+so the user can later see its historic.
