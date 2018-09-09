@@ -1,12 +1,6 @@
 envopenfood
-essais.py
-les_requetes.py
 essaitables.py
-essai_creations.py
-envopenfood
-config.py
 drop.py
-create.py
 .DS_Store
 category.py
-produits.py
+produit_category.py
