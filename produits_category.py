@@ -11,8 +11,6 @@ listCategory = []
 for i in range(20):
     listCategory.append(cat['tags'][i]['name'])
 
-print(len(listCategory))
-
 dictCatProducts = {}
 
 for category in listCategory:
@@ -20,8 +18,6 @@ for category in listCategory:
     r_products = requests.get('https://fr.openfoodfacts.org/cgi/search.pl?',params=settings)
     products = r_products.json()
     listProductsInfo = {}
-    print(category)
-    print(dictCatProducts)
     for i in range(nbProducts):
         try:
             code = products["products"][i]["code"]
