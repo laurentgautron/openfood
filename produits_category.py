@@ -27,6 +27,7 @@ for category in listCategory:
             store = products["products"][i]["stores"]
             nutriScore = products["products"][i]["nutrition_grade_fr"]
             listProductsInfo[code] = [name,description,link,store,nutriScore]
+            i += 1
         except Exception as e:
             continue
         else:
