@@ -4,3 +4,4 @@ drop.py
 .DS_Store
 category.py
 produit_category.py
+openfooddatas.json
