@@ -3,7 +3,7 @@ essaitables.py
 drop.py
 .DS_Store
 category.py
-produit_category.py
-openfooddatas.json
 essaiwhile.py
 __pycache__
+openfoodbase.json
+categories.json

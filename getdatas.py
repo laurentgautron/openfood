@@ -29,7 +29,6 @@ class Getdatas:
             products = r_products.json()
             listProductsInfo = {}
             for i in range(self.NBPRODUCTS):
-                print(i)
                 try:
                     code = products["products"][i]["code"]
                     name = products["products"][i]["product_name"]
@@ -44,6 +43,6 @@ class Getdatas:
                     dictCatProducts[category] = listProductsInfo
         return dictCatProducts
 
-    def get_json(self, dictCatProducts):
-        with open('openfooddatas.json','w') as f:
-            json.dump(dictCatProducts,f, indent=4)
+    def get_json(self, dictDatas, file):
+        with open(file,'w') as f:
+            json.dump(dictDatas,f, indent=4)

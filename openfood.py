@@ -10,8 +10,9 @@ class Main:
     def openfood(self):
         self.creation.create()
         self.categories = self.datas.find_categories()
+        self.jsonCategoriesDatas = self.datas.get_json(self.categories,'categories.json')
         self.products = self.datas.find_products(self.categories)
-        self.jsondatas = self.datas.get_json(self.products)
+        self.jsonProductsDatas = self.datas.get_json(self.products,'openfoodbase.json')
 
 if __name__ == '__main__':
     main = Main()
