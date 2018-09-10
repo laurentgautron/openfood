@@ -5,3 +5,5 @@ drop.py
 category.py
 produit_category.py
 openfooddatas.json
+essaiwhile.py
+__pycache__
