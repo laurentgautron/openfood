@@ -22,18 +22,18 @@ class Createtables:
                         """
 
         sql_product =  """ CREATE TABLE product (
-                            code INT(20) NOT NULL,
+                            code BIGINT NOT NULL,
                             name VARCHAR(255),
                             nutri_score VARCHAR(1),
                             description TEXT(100),
-                            link VARCHAR(45),
+                            link VARCHAR(255),
                             PRIMARY KEY(code))
                             ENGINE = INNODB DEFAULT CHARSET = 'utf8';
                         """
 
         sql_category_product = """ CREATE TABLE category_product (
                             category_name VARCHAR(100),
-                            product_code INT,
+                            product_code BIGINT,
                             PRIMARY KEY (category_name,product_code),
                             CONSTRAINT `fk_category_product_category` FOREIGN KEY (`category_name`) REFERENCES `category`(name),
                             CONSTRAINT `fk_category_product_product` FOREIGN KEY (`product_code`) REFERENCES `product`(`code`))
@@ -41,7 +41,7 @@ class Createtables:
                         """
 
         sql_substitute = """ CREATE TABLE substitute (
-                             code_product INT NOT NULL,
+                             code_product BIGINT NOT NULL,
                              substitute_code INT,
                              PRIMARY KEY(code_product))
                              ENGINE = INNODB DEFAULT CHARSET = 'utf8';
@@ -54,7 +54,7 @@ class Createtables:
 
         sql_store_product = """ CREATE TABLE store_product (
                            name_store VARCHAR(25),
-                           code_pro_store INT,
+                           code_pro_store BIGINT,
                            PRIMARY KEY (name_store, code_pro_store),
                            CONSTRAINT `fk_store_product_name` FOREIGN KEY (`name_store`) REFERENCES `store`(`name`),
                            CONSTRAINT `fk_store_product_code` FOREIGN KEY (`code_pro_store`) REFERENCES `product`(`code`))
