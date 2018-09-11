@@ -3,8 +3,8 @@ import json
 
 class Getdatas:
 
-    NBCATEGORIES = 20
-    NBPRODUCTS = 30
+    NBCATEGORIES = 5
+    NBPRODUCTS = 3
 
     def __init__(self):
 
@@ -17,31 +17,31 @@ class Getdatas:
         cat = r_categories.json()
         self.listCategories = []
         for i in range(self.NBCATEGORIES):
-            self.listCategories.append(cat['tags'][i]['name'])
+            category = (cat['tags'][i]['name'],cat['tags'][i]['url'].split('/')[-1])
+            self.listCategories.append(category)
         return self.listCategories
 
     def find_products(self, categories):
 
-        dictCatProducts = {}
+        dicDataProducts = {}
         for category in categories:
-            settings = {f"action":"process","tagtype_0":"categories","tag_contains_0":"contains","tag_0":{category},"sort_by":"unique_scans_n","page_size":{self.NBPRODUCTS},"json":1}
+            settings = {"action":"process","tagtype_0":"categories","tag_contains_0":"contains","tag_0":category[1],"sort_by":"unique_scans_n","page_size":str(self.NBPRODUCTS),"json":1}
             r_products = requests.get(self.urlProducts,params=settings)
             products = r_products.json()
             listProductsInfo = {}
             for i in range(self.NBPRODUCTS):
+                code = products["products"][i]["code"]
+                listProductsInfo[code] = {'name':'','description':'','link':'','store':'','nutriScore':''}
                 try:
-                    code = products["products"][i]["code"]
-                    name = products["products"][i]["product_name"]
-                    description = products["products"][i]["generic_name_fr"]
-                    link = products["products"][i]["url"]
-                    store = products["products"][i]["stores"]
-                    nutriScore = products["products"][i]["nutrition_grade_fr"]
-                    listProductsInfo[code] = [name,description,link,store,nutriScore]
+                    listProductsInfo[code]['name'] = products["products"][i]["product_name"]
+                    listProductsInfo[code]['description'] = products["products"][i]["generic_name_fr"]
+                    listProductsInfo[code]['link'] = products["products"][i]["url"]
+                    listProductsInfo[code]['store'] = products["products"][i]["stores"]
+                    listProductsInfo[code]['nutriScore'] = products["products"][i]["nutrition_grade_fr"]
                 except Exception as e:
                     continue
-                else:
-                    dictCatProducts[category] = listProductsInfo
-        return dictCatProducts
+            dicDataProducts[category[0]] =  listProductsInfo
+        return dicDataProducts
 
     def get_json(self, dictDatas, file):
         with open(file,'w') as f:

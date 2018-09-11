@@ -6,6 +6,7 @@ class Createtables:
 
     def __init__(self):
         self.connection = mysql.connector.connect(host = 'localhost', user = 'lolo', password = 'cestmoi')
+        
 
     def create(self):
 
@@ -14,7 +15,7 @@ class Createtables:
         sql_use = """ USE openfoodbase; """
 
         sql_category = """ CREATE TABLE category (
-                             name VARCHAR(100), 
+                             name VARCHAR(100) , 
                              PRIMARY KEY (name))
                              ENGINE = INNODB DEFAULT CHARSET = 'utf8'; 
                         """
