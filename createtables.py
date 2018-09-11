@@ -22,8 +22,8 @@ class Createtables:
                         """
 
         sql_product =  """ CREATE TABLE product (
-                            code INT NOT NULL,
-                            store VARCHAR(45),
+                            code INT(20) NOT NULL,
+                            name VARCHAR(255),
                             nutri_score VARCHAR(1),
                             description TEXT(100),
                             link VARCHAR(45),

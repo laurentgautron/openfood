@@ -31,13 +31,13 @@ class Getdatas:
             listProductsInfo = {}
             for i in range(self.NBPRODUCTS):
                 code = products["products"][i]["code"]
-                listProductsInfo[code] = {'name':'','description':'','link':'','store':'','nutriScore':''}
+                listProductsInfo[code] = {'name':'','description':'','link':'','store':'','nutri_score':''}
                 try:
                     listProductsInfo[code]['name'] = products["products"][i]["product_name"]
                     listProductsInfo[code]['description'] = products["products"][i]["generic_name_fr"]
                     listProductsInfo[code]['link'] = products["products"][i]["url"]
                     listProductsInfo[code]['store'] = products["products"][i]["stores"]
-                    listProductsInfo[code]['nutriScore'] = products["products"][i]["nutrition_grade_fr"]
+                    listProductsInfo[code]['nutri_score'] = products["products"][i]["nutrition_grade_fr"]
                 except Exception as e:
                     continue
             dicDataProducts[category[0]] =  listProductsInfo
