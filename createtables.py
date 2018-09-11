@@ -5,6 +5,7 @@ import mysql.connector
 class Createtables:
 
     def __init__(self):
+
         self.connection = mysql.connector.connect(host = 'localhost', user = 'lolo', password = 'cestmoi')
         
 
@@ -15,7 +16,7 @@ class Createtables:
         sql_use = """ USE openfoodbase; """
 
         sql_category = """ CREATE TABLE category (
-                             name VARCHAR(100) , 
+                             name VARCHAR(100), 
                              PRIMARY KEY (name))
                              ENGINE = INNODB DEFAULT CHARSET = 'utf8'; 
                         """
@@ -66,4 +67,5 @@ class Createtables:
         for table in sql:
             cursor.execute(table)
         self.connection.commit()
+        cursor.close()
         self.connection.close()

@@ -3,8 +3,8 @@ import json
 
 class Getdatas:
 
-    NBCATEGORIES = 5
-    NBPRODUCTS = 3
+    NBCATEGORIES = 20
+    NBPRODUCTS = 30
 
     def __init__(self):
 
