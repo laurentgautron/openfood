@@ -3,8 +3,8 @@ import json
 
 class Getdatas:
 
-    NBCATEGORIES = 2
-    NBPRODUCTS = 3
+    NBCATEGORIES = 3
+    NBPRODUCTS = 10
 
     def __init__(self):
 
@@ -38,8 +38,11 @@ class Getdatas:
                     listProductsInfo[code]['link'] = products["products"][i]["url"]
                     listProductsInfo[code]['store'] = products["products"][i]["stores"]
                     listProductsInfo[code]['nutri_score'] = products["products"][i]["nutrition_grade_fr"]
-                except Exception as e:
+                except KeyError as e:
+                    del listProductsInfo[code]
                     continue
+                if listProductsInfo[code]['store'] == "":
+                    del listProductsInfo[code]
             dicDataProducts[category[0]] =  listProductsInfo
         return dicDataProducts
 

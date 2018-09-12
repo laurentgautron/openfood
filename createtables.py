@@ -11,17 +11,17 @@ class Createtables:
 
     def create(self):
 
-        sql_base = """ CREATE DATABASE openfoodbase CHARACTER SET 'utf8'; """
+        sql_base = """ CREATE DATABASE IF NOT EXISTS openfoodbase CHARACTER SET 'utf8'; """
 
         sql_use = """ USE openfoodbase; """
 
-        sql_category = """ CREATE TABLE category (
+        sql_category = """ CREATE TABLE IF NOT EXISTS category (
                              name VARCHAR(100), 
                              PRIMARY KEY (name))
                              ENGINE = INNODB DEFAULT CHARSET = 'utf8'; 
                         """
 
-        sql_product =  """ CREATE TABLE product (
+        sql_product =  """ CREATE TABLE IF NOT EXISTS product (
                             code BIGINT NOT NULL,
                             name VARCHAR(255),
                             nutri_score VARCHAR(1),
@@ -31,7 +31,7 @@ class Createtables:
                             ENGINE = INNODB DEFAULT CHARSET = 'utf8';
                         """
 
-        sql_category_product = """ CREATE TABLE category_product (
+        sql_category_product = """ CREATE TABLE IF NOT EXISTS category_product (
                             category_name VARCHAR(100),
                             product_code BIGINT,
                             PRIMARY KEY (category_name,product_code),
@@ -40,19 +40,19 @@ class Createtables:
                             ENGINE = INNODB DEFAULT CHARSET = 'utf8';
                         """
 
-        sql_substitute = """ CREATE TABLE substitute (
+        sql_substitute = """ CREATE TABLE IF NOT EXISTS substitute (
                              code_product BIGINT NOT NULL,
                              substitute_code INT,
                              PRIMARY KEY(code_product))
                              ENGINE = INNODB DEFAULT CHARSET = 'utf8';
                         """
 
-        sql_store = """ CREATE TABLE store (
+        sql_store = """ CREATE TABLE IF NOT EXISTS store (
                          name VARCHAR(25) NOT NULL,
                          PRIMARY KEY(name));
                     """
 
-        sql_store_product = """ CREATE TABLE store_product (
+        sql_store_product = """ CREATE TABLE IF NOT EXISTS store_product (
                            name_store VARCHAR(25),
                            code_pro_store BIGINT,
                            PRIMARY KEY (name_store, code_pro_store),
