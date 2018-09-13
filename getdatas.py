@@ -28,24 +28,28 @@ class Getdatas:
             settings = {"action":"process","tagtype_0":"categories","tag_contains_0":"contains","tag_0":category[1],"sort_by":"unique_scans_n","page_size":str(self.NBPRODUCTS),"json":1}
             r_products = requests.get(self.urlProducts,params=settings)
             products = r_products.json()
-            listProductsInfo = {}
-            for i in range(self.NBPRODUCTS):
-                code = products["products"][i]["code"]
-                listProductsInfo[code] = {'name':'','description':'','link':'','store':'','nutri_score':''}
-                try:
-                    listProductsInfo[code]['name'] = products["products"][i]["product_name"]
-                    listProductsInfo[code]['description'] = products["products"][i]["generic_name_fr"]
-                    listProductsInfo[code]['link'] = products["products"][i]["url"]
-                    listProductsInfo[code]['store'] = products["products"][i]["stores"]
-                    listProductsInfo[code]['nutri_score'] = products["products"][i]["nutrition_grade_fr"]
-                except KeyError as e:
-                    del listProductsInfo[code]
-                    continue
-                if listProductsInfo[code]['store'] == "":
-                    del listProductsInfo[code]
-            dicDataProducts[category[0]] =  listProductsInfo
+            dicDataProducts[category[0]] =  fil_product_table(products,self.NBPRODUCTS)
         return dicDataProducts
 
     def get_json(self, dictDatas, file):
         with open(file,'w') as f:
             json.dump(dictDatas,f, indent=4)
+
+    def fill_pproduct_table(self,products,nbproducts):
+
+        listProductsInfo = {}
+        for i in range(self.NBPRODUCTS):
+            code = products["products"][i]["code"]
+            listProductsInfo[code] = {'name':'','description':'','link':'','store':'','nutri_score':''}
+            try:
+                listProductsInfo[code]['name'] = products["products"][i]["product_name"]
+                listProductsInfo[code]['description'] = products["products"][i]["generic_name_fr"]
+                listProductsInfo[code]['link'] = products["products"][i]["url"]
+                listProductsInfo[code]['store'] = products["products"][i]["stores"]
+                listProductsInfo[code]['nutri_score'] = products["products"][i]["nutrition_grade_fr"]
+            except KeyError as e:
+                del listProductsInfo[code]
+                continue
+            if listProductsInfo[code]['store'] == "":
+                del listProductsInfo[code]
+        return listProductsInfo
