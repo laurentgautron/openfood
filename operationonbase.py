@@ -37,8 +37,6 @@ class Operationonbase:
                         cursor.execute(sql_store_product, (s,code,))     
                 sql_cat_product = "INSERT INTO category_product (category_name,product_code) VALUES (%s,%s);"
                 cursor.execute(sql_cat_product, (cat,code,))
-                print(listStore)
-        print(len(listStore))
         self.connection.commit()
         cursor.close()
         self.connection.close()

@@ -21,21 +21,7 @@ class Getdatas:
             self.listCategories.append(category)
         return self.listCategories
 
-    def find_products(self, categories):
-
-        dicDataProducts = {}
-        for category in categories:
-            settings = {"action":"process","tagtype_0":"categories","tag_contains_0":"contains","tag_0":category[1],"sort_by":"unique_scans_n","page_size":str(self.NBPRODUCTS),"json":1}
-            r_products = requests.get(self.urlProducts,params=settings)
-            products = r_products.json()
-            dicDataProducts[category[0]] =  fil_product_table(products,self.NBPRODUCTS)
-        return dicDataProducts
-
-    def get_json(self, dictDatas, file):
-        with open(file,'w') as f:
-            json.dump(dictDatas,f, indent=4)
-
-    def fill_pproduct_table(self,products,nbproducts):
+    def fill_product_table(self,products,nbproducts):
 
         listProductsInfo = {}
         for i in range(self.NBPRODUCTS):
@@ -53,3 +39,19 @@ class Getdatas:
             if listProductsInfo[code]['store'] == "":
                 del listProductsInfo[code]
         return listProductsInfo
+
+    def find_products(self, categories):
+
+        dicDataProducts = {}
+        for category in categories:
+            settings = {"action":"process","tagtype_0":"categories","tag_contains_0":"contains","tag_0":category[1],"sort_by":"unique_scans_n","page_size":str(self.NBPRODUCTS),"json":1}
+            r_products = requests.get(self.urlProducts,params=settings)
+            products = r_products.json()
+            dicDataProducts[category[0]] =  self.fill_product_table(products,self.NBPRODUCTS)
+        return dicDataProducts
+
+    def get_json(self, dictDatas, file):
+        with open(file,'w') as f:
+            json.dump(dictDatas,f, indent=4)
+
+    
