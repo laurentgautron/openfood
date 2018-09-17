@@ -30,10 +30,10 @@ class Menu:
         print(self.how_to_exit)
         self.menu_choice = menu_choice
         print('------ %s ------'%self.menu_choice)
-        sql = "SELECT name FROM %s"%self.menu_choice
+        sql = "SELECT name FROM %s;"%self.menu_choice
         cursor = self.connection.cursor()
         cursor.execute(sql)
         rows = cursor.fetchall()
-        for number, category in enumerate(rows):
-            print(' %d - : %s'%(number+1, category))
+        for number, value in enumerate(rows):
+            print(' %d - : %s'%(number+1, value))
         return rows[int(input(self.make_choice))-1]

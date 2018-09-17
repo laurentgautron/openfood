@@ -20,6 +20,7 @@ class Operationonbase:
         cursor.execute("USE openfoodbase;")
         for cat, products in dataopenfood.items():
             sql_cat = "INSERT INTO category(name) VALUES (%s);"
+            print(type(cat))
             cursor.execute(sql_cat, (cat,))
             for code, value in products.items():
                 if code not in list_products:
