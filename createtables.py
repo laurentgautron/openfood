@@ -6,12 +6,12 @@ class Createtables:
 
     def __init__(self):
 
-        self.connection = mysql.connector.connect(host = 'localhost', user = 'lolo', password = 'cestmoi')
-        
+        self.connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi')   
 
     def create(self):
 
-        sql_base = """ CREATE DATABASE IF NOT EXISTS openfoodbase DEFAULT CHARACTER SET utf8mb4 collate utf8mb4_bin ; """
+        sql_base = """ CREATE DATABASE IF NOT EXISTS openfoodbase 
+                       DEFAULT CHARACTER SET utf8mb4 collate utf8mb4_bin ; """
 
         sql_use = """ USE openfoodbase; """
 
@@ -21,7 +21,7 @@ class Createtables:
                              ENGINE = INNODB; 
                         """
 
-        sql_product =  """ CREATE TABLE IF NOT EXISTS product (
+        sql_product = """ CREATE TABLE IF NOT EXISTS product (
                             code BIGINT NOT NULL,
                             name VARCHAR(255),
                             nutri_score VARCHAR(1),
@@ -63,7 +63,8 @@ class Createtables:
                        """
 
     
-        sql = [sql_base,sql_use,sql_category,sql_product,sql_category_product,sql_substitute,sql_store,sql_store_product]
+        sql = [sql_base, sql_use, sql_category, sql_product, sql_category_product, \
+                sql_substitute, sql_store, sql_store_product]
         cursor = self.connection.cursor()
         for table in sql:
             cursor.execute(table)

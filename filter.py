@@ -1,7 +1,7 @@
 
 class Filter:
 
-    def filter_store(self,element):
+    def filter_store(self, element):
 
         list_to_filter = []
         for item in element:

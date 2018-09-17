@@ -11,10 +11,10 @@ class Main:
 
         self.creation = Createtables()
         self.datas = Getdatas()
-        self.operationonbase = Operationonbase()
+        self.operation_on_base = Operationonbase()
         self.remove = Remove()
-        self.menu = Menu()
         
+
     def openfood(self):
 
         empty = not os.path.isfile('openfoodbase.json')
@@ -22,15 +22,16 @@ class Main:
             self.remove.remove_the_base()
             self.categories = self.datas.find_categories()
             self.products = self.datas.find_products(self.categories)
-            self.datas.get_json(self.products,'openfoodbase.json')
-            self.creation.create()
-            self.operationonbase.datas_in_tables()
-        choice  = self.menu.first_menu()
+            self.datas.get_json(self.products, 'openfoodbase.json')
+        self.creation.create()
+        self.operation_on_base.datas_in_tables()
+        self.menu = Menu()
+        choice = self.menu.first_menu()
         print(choice)
         while choice != 0:
             if choice == 1:
-                categoryChoice = self.menu.next_menu('category')
-                productChoice = self.menu.next_menu(categoryChoice)
+                category_choice = self.menu.next_menu('category')
+                product_choice = self.menu.next_menu(category_choice)
 
 
 if __name__ == '__main__':
