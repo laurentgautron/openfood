@@ -1,21 +1,39 @@
 import os
+import mysql.connector
 
 class Menu:
 
+    def __init__(self):
+
+        self.howToExit = 'if you want exit the application enter 0 !'
+        self.connection = mysql.connector.connect(host = 'localhost', user = 'lolo', password = 'cestmoi', database = 'openfoodbase')
+        self.makechoice = 'make your choice by choosing the corresponding number among the propositions: '
+
     def first_menu(self):
 
-        choice = int()
-        while choice not in [1,2,3]:
+        categoryChoice = int
+        while categoryChoice not in [0,1,2]:
             try:
-                os.system("clear") 
-                print('-------- menu pricipal --------')
-                print('1 - : consult the catégories')
+                os.system("clear")
+                print(self.howToExit) 
+                print('-------- Main menu --------')
+                print('1 - : consult the categories')
                 print('2 - : consult the history')
-                print('3 - : exit')
-                choice = int(input('make your choice by choosing the corresponding number among the propositions: '))
+                categoryChoice = int(input(self.makechoice))
             except ValueError as e:
                 continue
-        if choice == 3:
-            return 0
-        else:
-            return choice
+        return categoryChoice
+
+    def next_menu(self,menuchoice):
+
+        os.system("clear")
+        print(self.howToExit)
+        self.menuchoice = menuchoice
+        print('------ %s ------'%self.menuchoice)
+        sql = "SELECT name FROM %s"%self.menuchoice
+        cursor = self.connection.cursor()
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        for number, category in enumerate(rows):
+            print(' %d - : %s'%(number+1,category))
+        return rows[int(input(self.makechoice))-1]

@@ -27,7 +27,10 @@ class Main:
             self.operationonbase.datas_in_tables()
         choice  = self.menu.first_menu()
         print(choice)
-
+        while choice != 0:
+            if choice == 1:
+                categoryChoice = self.menu.next_menu('category')
+                productChoice = self.menu.next_menu(categoryChoice)
 
 
 if __name__ == '__main__':
