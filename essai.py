@@ -5,20 +5,31 @@ from store import Store
 from storeProduct import StoreProduct
 from product import Product
 from historic import Historic
-from createtables import CreateTables
+from tables import Tables
+from datas import Datas
+import os
 
 class Main:
 
+    def __init__(self):
+
+        self.category = Category.create()
+        self.product = Product.create()
+        self.store = Store.create()
+        self.categoryProduct = CategoryProduct.create()
+        self.storeProduct = StoreProduct.create()
+        self.historic = Historic.create()
+        self.empty = os.path.isfile('openfoodbase.json')
+        self.datas = Datas()
+
     def openfood(self):
 
-        category = Category.create()
-        product = Product.create()
-        store = Store.create()
-        categoryProduct = CategoryProduct.create()
-        storeProduct = StoreProduct.create()
-        historic = Historic.create()
-        lisTable = [category, product, store, categoryProduct, storeProduct, historic]
-        CreateTables.creation(lisTable)
+        if not self.empty:
+            print(self.empty)
+            Tables.remove()
+            lisTable = [self.category, self.product, self.store, self.categoryProduct, self.storeProduct, self.historic]
+            Tables.creation(lisTable)
+            self.datas.mkjsonfile()
 
 
 if __name__ == '__main__':
