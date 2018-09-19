@@ -26,14 +26,18 @@ class Menu:
 
     def next_menu(self, menu_choice):
 
+        cursor = self.connection.cursor()
         os.system("clear")
         print(self.how_to_exit)
         self.menu_choice = menu_choice
+        print(self.menu_choice)
         print('------ %s ------'%self.menu_choice)
         sql = "SELECT name FROM %s;"%self.menu_choice
-        cursor = self.connection.cursor()
         cursor.execute(sql)
         rows = cursor.fetchall()
+        self.connection.commit()
+        cursor.close()
         for number, value in enumerate(rows):
-            print(' %d - : %s'%(number+1, value))
+            value_list = list(value)[0]
+            print(' %d - : %s'%(number+1, value_list))
         return rows[int(input(self.make_choice))-1]

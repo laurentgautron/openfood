@@ -30,7 +30,7 @@ class Getdatas:
             code = products["products"][item]["code"]
             list_products_info[code] = {'name':'', 'description':'', 'link':'', 'store':'', 'nutri_score':''}
             try:
-                list_products_info[code]['name'] = products["products"][itel]["product_name"]
+                list_products_info[code]['name'] = products["products"][item]["product_name"]
                 list_products_info[code]['description'] = products["products"][item]["generic_name_fr"]
                 list_products_info[code]['link'] = products["products"][item]["url"]
                 list_products_info[code]['store'] = products["products"][item]["stores"]
@@ -55,6 +55,6 @@ class Getdatas:
 
     def get_json(self, dict_datas, file):
         with open(file, 'w') as f:
-            json.dump(dictDatas, f, indent=4)
+            json.dump(dict_datas, f, indent=4)
 
     
