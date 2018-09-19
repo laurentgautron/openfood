@@ -3,8 +3,10 @@ import json
 
 class Datas:
 
-    NBCATEGORIES = 20
-    NBPRODUCTS = 30
+    def __init__(self):
+
+        self.nbCategories = 20
+        self.nbProduct = 30
 
     def get_category(self,nbcat):
 
@@ -16,13 +18,6 @@ class Datas:
             cat = cat_json['tags'][item]['name'], cat_json['tags'][item]['url'].split('/')[-1]
             listCategories.append(cat)
         return listCategories
-
-    def get_all_datas(self,category, products):
-
-        dict_datas = {}
-        for product in products:
-            dict_datas[category[0]] = products
-        return dict_datas
 
     def get_product(self,category, nbProduct):
 
@@ -43,22 +38,20 @@ class Datas:
                 listInfoProduct[code]['nutri_score'] = product_json['products'][item]['nutrition_grade_fr']
             except KeyError as error:
                 continue
+            if product_json['products'][item]['stores'] == "":
+                del listInfoProduct[code]
         return listInfoProduct
 
     def record_datas(self, nbCategory, nbProduct):
 
-        self.nbCategory = nbCategory
-        self.nbProduct = nbProduct
+        dict_datas_product = {}
         categories = self.get_category(nbCategory)
-        print(categories)
         for category in categories:
-            products = self.get_product(category, nbProduct)
-            dict_datas_product = self.get_all_datas(category, products)
-            print(dict_datas_product)
+            dict_datas_product[category[1]] = self.get_product(category, nbProduct)
         return dict_datas_product
 
     def mkjsonfile(self):
 
-        dict_to_json = self.record_datas(self.NBCATEGORIES, self.NBPRODUCTS)
+        dict_to_json = self.record_datas(self.nbCategories, self.nbProduct)
         with open('openfoodbase.json', 'w') as jsonfile:
             json.dump(dict_to_json, jsonfile, indent=4)

@@ -25,7 +25,7 @@ class Main:
     def openfood(self):
 
         if not self.empty:
-            print(self.empty)
+            os.system('clear')
             Tables.remove()
             lisTable = [self.category, self.product, self.store, self.categoryProduct, self.storeProduct, self.historic]
             Tables.creation(lisTable)
