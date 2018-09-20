@@ -1,7 +1,26 @@
 import mysql.connector
+from category import Category
+from categoryProduct import CategoryProduct
+from store import Store
+from storeProduct import StoreProduct
+from product import Product
+from historic import Historic
 
 class Tables:
 
+    def __init__(self):
+
+        self.category = Category.create()
+        self.product = Product.create()
+        self.store = Store.create()
+        self.categoryProduct = CategoryProduct.create()
+        self.storeProduct = StoreProduct.create()
+        self.historic = Historic.create()
+        
+
+    def make_list_sql_create(self):
+
+        return [self.category, self.product, self.store, self.categoryProduct, self.storeProduct, self.historic]
 
     @staticmethod
     def creation(listables):
