@@ -1,3 +1,5 @@
+import json
+import mysql.connector
 
 class Historic:
 
@@ -9,4 +11,17 @@ class Historic:
                     substitute_name VARCHAR(255),
                     PRIMARY KEY (code_to_substitute))
                     ENGINE = INNODB; """
-        return sql
+        connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi', database='openfoodbase')
+        sql_use = """ USE openfoodbase; """
+        cursor = connection.cursor()
+        cursor.execute(sql_use)
+        cursor.execute(sql)
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+    def insert():
+
+        with open('openfoodbase.json', 'r') as f:
+            datasopenfood = json.load(f)
+        connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi', database='openfoodbase')

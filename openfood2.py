@@ -10,16 +10,17 @@ class Main:
 
         self.empty = os.path.isfile('openfoodbase.json')
         self.datas = Datas()
-        self.tables = Tables()
-
+        
     def openfood(self):
 
         if not self.empty:
             os.system('clear')
             Tables.remove()
-            lisTable = self.tables.make_list_sql_create()
-            Tables.creation(lisTable)
             self.datas.mkjsonfile()
+        Tables.creation()
+        Tables.bonjour()
+        Tables.fill_tables()
+
 
 
 if __name__ == '__main__':

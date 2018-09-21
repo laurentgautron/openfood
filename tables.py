@@ -8,39 +8,50 @@ from historic import Historic
 
 class Tables:
 
-    def __init__(self):
-
-        self.category = Category.create()
-        self.product = Product.create()
-        self.store = Store.create()
-        self.categoryProduct = CategoryProduct.create()
-        self.storeProduct = StoreProduct.create()
-        self.historic = Historic.create()
-        
-
+   
     def make_list_sql_create(self):
 
         return [self.category, self.product, self.store, self.categoryProduct, self.storeProduct, self.historic]
 
     @staticmethod
-    def creation(listables):
+    def creation():
 
         connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi')
-        sql_base = """ CREATE DATABASE IF NOT EXISTS openfoodbase DEFAULT CHARACTER SET utf8; """
-        sql_use = """ USE openfoodbase; """
+        sql = """ CREATE DATABASE IF NOT EXISTS openfoodbase DEFAULT CHARACTER SET utf8; """
         cursor = connection.cursor()
-        cursor.execute(sql_base)
-        cursor.execute(sql_use)
-        for tables in listables:
-            cursor.execute(tables)
+        cursor.execute(sql)
         cursor.close()
         connection.close()
+        Category.create()
+        Product.create()
+        Store.create()
+        CategoryProduct.create()
+        StoreProduct.create()
+        Historic.create()
 
     def remove():
 
         connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi')
-        sql_drop = """ DROP DATABASE openfoodbase; """
+        sql = """ DROP DATABASE openfoodbase; """
         cursor = connection.cursor()
-        cursor.execute(sql_drop)
+        cursor.execute(sql)
         cursor.close()
         connection.close()
+
+    def fill_tables():
+
+        Category.insert()
+        input()
+        Product.insert()
+        input()
+        
+        input()
+        Store.insert()
+        input()
+        CategoryProduct.insert()
+        input()
+        StoreProduct.insert()
+
+    def bonjour():
+
+        print('bonjour')

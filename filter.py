@@ -1,4 +1,4 @@
-
+	
 class Filter:
 
     def filter_store(self, element):

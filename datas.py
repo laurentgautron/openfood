@@ -1,5 +1,6 @@
 import requests
 import json
+import mysql.connector
 
 class Datas:
 
@@ -7,6 +8,17 @@ class Datas:
 
         self.nbCategories = 20
         self.nbProduct = 30
+
+    def filter(self, stores):
+        
+        stores = list(stores.split(','))
+        lisToFilter = []
+        for store in stores:
+            if store not in lisToFilter:
+                store = store.strip()
+                store = store.lower()
+                lisToFilter.append(store)
+        return list(set(lisToFilter))
 
     def get_category(self,nbcat):
 
@@ -32,7 +44,7 @@ class Datas:
             listInfoProduct[code] = {'name':' ', 'store':' ', 'description':' ', 'link':' ', 'nutri_score':' '}
             try:
                 listInfoProduct[code]['name'] = product_json['products'][item]['product_name']
-                listInfoProduct[code]['store'] = product_json['products'][item]['stores']
+                listInfoProduct[code]['store'] = self.filter(product_json['products'][item]['stores'])
                 listInfoProduct[code]['description'] = product_json['products'][item]['generic_name_fr']
                 listInfoProduct[code]['link'] = product_json['products'][item]['url']
                 listInfoProduct[code]['nutri_score'] = product_json['products'][item]['nutrition_grade_fr']
@@ -47,7 +59,7 @@ class Datas:
         dict_datas_product = {}
         categories = self.get_category(nbCategory)
         for category in categories:
-            dict_datas_product[category[1]] = self.get_product(category, nbProduct)
+            dict_datas_product[category[0]] = self.get_product(category, nbProduct)
         return dict_datas_product
 
     def mkjsonfile(self):

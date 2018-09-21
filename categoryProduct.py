@@ -1,3 +1,5 @@
+import json
+import mysql.connector
 
 class CategoryProduct:
 
@@ -12,4 +14,25 @@ class CategoryProduct:
                             CONSTRAINT `fk_category_product_product` FOREIGN KEY (`product_code`) REFERENCES `product`(`code`))
                             ENGINE = INNODB;
                         """
-        return sql
+        connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi', database='openfoodbase')
+        sql_use = """ USE openfoodbase; """
+        cursor = connection.cursor()
+        cursor.execute(sql_use)
+        cursor.execute(sql)
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+    def insert():
+
+        with open('openfoodbase.json', 'r') as f:
+            datasopenfood = json.load(f)
+        connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi', database='openfoodbase')
+        cursor = connection.cursor()
+        for category, products in datasopenfood.items():
+            for code in products.keys():
+                sql = """INSERT INTO category_product(category_name, product_code) VALUES (%s,%s);"""
+                cursor.execute(sql, (category, code,))
+        connection.commit()
+        cursor.close()
+        connection.close()
