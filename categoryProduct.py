@@ -36,3 +36,17 @@ class CategoryProduct:
         connection.commit()
         cursor.close()
         connection.close()
+
+    def menu(categoryChoice):
+
+        connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi', database='openfoodbase')
+        cursor = connection.cursor()
+        sql = """SELECT product.name FROM product JOIN category_product ON product_code = code \
+                    WHERE category_name = %s;"""
+        cursor.execute(sql, categoryChoice)
+        products = cursor.fetchall()
+        connection.commit()
+        cursor.close()
+        connection.close()
+        for indice, product in enumerate(products):
+            print('%d - : %s'%(indice+1, product[0]))

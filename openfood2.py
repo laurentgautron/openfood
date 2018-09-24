@@ -1,7 +1,7 @@
-
-
 from tables import Tables
 from datas import Datas
+from menu import Menu
+from categoryProduct import CategoryProduct
 import os
 
 class Main:
@@ -10,6 +10,7 @@ class Main:
 
         self.empty = os.path.isfile('openfoodbase.json')
         self.datas = Datas()
+        self.menu = Menu()
         
     def openfood(self):
 
@@ -17,9 +18,16 @@ class Main:
             os.system('clear')
             Tables.remove()
             self.datas.mkjsonfile()
-        Tables.creation()
-        Tables.bonjour()
-        Tables.fill_tables()
+            Tables.creation()
+            Tables.fill_tables()
+        choice = self.menu.first_menu()
+        #while choice != 'q':
+        if choice == 1:
+            categoryChoice = self.menu.second_menu()
+            CategoryProduct.menu(categoryChoice)
+
+        #else:
+            #choiceTwo = self.menu.second_menu(choiceOne, historic )
 
 
 

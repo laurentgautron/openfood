@@ -17,7 +17,7 @@ class Tables:
     def creation():
 
         connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi')
-        sql = """ CREATE DATABASE IF NOT EXISTS openfoodbase DEFAULT CHARACTER SET utf8; """
+        sql = """ CREATE DATABASE IF NOT EXISTS openfoodbase CHARACTER SET utf8; """
         cursor = connection.cursor()
         cursor.execute(sql)
         cursor.close()
@@ -41,17 +41,7 @@ class Tables:
     def fill_tables():
 
         Category.insert()
-        input()
         Product.insert()
-        input()
-        
-        input()
         Store.insert()
-        input()
         CategoryProduct.insert()
-        input()
         StoreProduct.insert()
-
-    def bonjour():
-
-        print('bonjour')

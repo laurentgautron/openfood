@@ -9,6 +9,16 @@ class Datas:
         self.nbCategories = 20
         self.nbProduct = 30
 
+    def is_empty(self, lisToTest):
+
+        test = False
+        for key in lisToTest.keys():
+            item = ''.join(lisToTest[key])
+            item = item.replace(' ','')
+            if item == '' or item == [] or item == [''] or item == "  ":
+                test = True
+        return test
+
     def filter(self, stores):
         
         stores = list(stores.split(','))
@@ -49,8 +59,9 @@ class Datas:
                 listInfoProduct[code]['link'] = product_json['products'][item]['url']
                 listInfoProduct[code]['nutri_score'] = product_json['products'][item]['nutrition_grade_fr']
             except KeyError as error:
+                del listInfoProduct[code]
                 continue
-            if product_json['products'][item]['stores'] == "":
+            if self.is_empty(listInfoProduct[code]):
                 del listInfoProduct[code]
         return listInfoProduct
 
