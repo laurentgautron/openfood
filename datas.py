@@ -15,7 +15,7 @@ class Datas:
         for key in lisToTest.keys():
             item = ''.join(lisToTest[key])
             item = item.replace(' ','')
-            if item == '' or item == [] or item == [''] or item == "  ":
+            if item == '':
                 test = True
         return test
 

@@ -15,6 +15,9 @@ class Menu:
         cursor.close()
         connection.close()
 
+    #def is_valid(self,choice):
+
+
     def first_menu(self):
 
         os.system('clear')
@@ -23,12 +26,19 @@ class Menu:
         print('2 - : consult historic')
         print('To quit , enter 0')
         print(self.makeChoice)
-        choice = int(input('your choice is (enter a number beteween 1 and 3): '))
-        while choice not in (0,1,2):
+        choice = input('your choice is (enter a number beteween 1 and 2): ')
+        #if is_valid(choice):
+            #return choice
+        while True:
             try:
-                choice = int(input())
+                choice = int(choice)
             except ValueError as error:
                 print('enter a numeral !!')
+            if choice not in (0,1,2,):
+                choice = input('this choice is not a part of the proposals, try again ! ')
+
+            else:
+                break
         return choice
 
     def second_menu(self):
