@@ -8,40 +8,23 @@ from historic import Historic
 
 class Tables:
 
-   
-    def make_list_sql_create(self):
+    @staticmethod
+    def creation(db):
 
-        return [self.category, self.product, self.store, self.categoryProduct, self.storeProduct, self.historic]
+        sql = """ CREATE DATABASE IF NOT EXISTS openfoodbase CHARACTER SET utf8; """
+        db.execute(sql)
+        Category.create(db)
+        Product.create(db)
+        Store.create(db)
+        CategoryProduct.create(db)
+        StoreProduct.create(db)
+        Historic.create(db)
 
     @staticmethod
-    def creation():
+    def fill_tables(db):
 
-        connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi')
-        sql = """ CREATE DATABASE IF NOT EXISTS openfoodbase CHARACTER SET utf8; """
-        cursor = connection.cursor()
-        cursor.execute(sql)
-        cursor.close()
-        connection.close()
-        Category.create()
-        Product.create()
-        Store.create()
-        CategoryProduct.create()
-        StoreProduct.create()
-        Historic.create()
-
-    def remove():
-
-        connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi')
-        sql = """ DROP DATABASE openfoodbase; """
-        cursor = connection.cursor()
-        cursor.execute(sql)
-        cursor.close()
-        connection.close()
-
-    def fill_tables():
-
-        Category.insert()
-        Product.insert()
-        Store.insert()
-        CategoryProduct.insert()
-        StoreProduct.insert()
+        Category.insert(db)
+        Product.insert(db)
+        Store.insert(db)
+        CategoryProduct.insert(db)
+        StoreProduct.insert(db)

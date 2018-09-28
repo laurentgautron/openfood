@@ -4,39 +4,30 @@ import mysql.connector
 class StoreProduct:
 
     @staticmethod
-    def create():
+    def create(db):
 
         sql = """ CREATE TABLE IF NOT EXISTS store_product (
-                    name_store VARCHAR(25),
+                    id_store INT,
                     code_pro_store BIGINT,
-                    PRIMARY KEY (name_store, code_pro_store),
-                    CONSTRAINT `fk_store_product_name` FOREIGN KEY (`name_store`) REFERENCES `store`(`name`),
+                    PRIMARY KEY (id_store, code_pro_store),
+                    CONSTRAINT `fk_store_product_name` FOREIGN KEY (`id_store`) REFERENCES `store`(`id`),
                     CONSTRAINT `fk_store_product_code` FOREIGN KEY (`code_pro_store`) REFERENCES `product`(`code`))
                      ENGINE = INNODB; """
-        connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi', database='openfoodbase')
-        sql_use = """ USE openfoodbase; """
-        cursor = connection.cursor()
-        cursor.execute(sql_use)
-        cursor.execute(sql)
-        connection.commit()
-        cursor.close()
-        connection.close()
+        db.execute(sql)
 
-    def insert():
+    @staticmethod
+    def insert(db):
 
         with open('openfoodbase.json', 'r') as f:
             datasopenfood = json.load(f)
-        connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi', database='openfoodbase')
-        cursor = connection.cursor()
         listCode = []
         for datascode in datasopenfood.values():
             for code, datas in datascode.items():
                 if code not in listCode:
                     listCode.append(code)
                     for store in datas['store']:
-                        if store.split() != []:
-                            sql = """ INSERT INTO store_product(name_store, code_pro_store) VALUES (%s, %s); """
-                            cursor.execute(sql, (store, code))
-        connection.commit()
-        cursor.close()
-        connection.close()
+                        sqlstore = "SELECT id FROM store WHERE name = %s;"
+                        db.execute(sqlstore, (store,))
+                        idStore = db.fetchone()
+                        sql = """ INSERT INTO store_product(id_store, code_pro_store) VALUES (%s, %s); """
+                        db.execute(sql, (idStore[0], code))

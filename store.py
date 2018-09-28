@@ -6,35 +6,28 @@ class Store:
 
     @staticmethod
 
-    def create():
+    def create(db):
 
         sql = """ CREATE TABLE IF NOT EXISTS store (
-                    name VARCHAR(255) NOT NULL,
-                    PRIMARY KEY(name))
+                    id INT NOT NULL AUTO_INCREMENT,
+                    name VARCHAR(255),
+                    PRIMARY KEY(id))
                     ENGINE = INNODB; """
-        connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi', database='openfoodbase')
-        sql_use = """ USE openfoodbase; """
-        cursor = connection.cursor()
-        cursor.execute(sql_use)
-        cursor.execute(sql)
-        connection.commit()
-        cursor.close()
-        connection.close()
+        db.execute(sql)
 
-    def insert():
+    @staticmethod
+    def insert(db):
 
         with open('openfoodbase.json', 'r') as f:
             datasopenfood = json.load(f)
         listStore = []
-        connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi', database='openfoodbase')
-        cursor = connection.cursor()
         for data in datasopenfood.values():
             for datas in data.values():
                 for store in datas['store']:
                     if store not in listStore:
                         listStore.append(store)
                         sql = """ INSERT INTO store(name) VALUES (%s); """
-                        cursor.execute(sql, (store,))
-        connection.commit()
-        cursor.close()
-        connection.close()
+                        db.execute(sql, (store,))
+
+    #@staticmethod
+    #def get_datas(db, code):

@@ -33,11 +33,11 @@ class Datas:
     def get_category(self,nbcat):
 
         url_category = 'https://fr.openfoodfacts.org/categories.json'
-        r_category = requests.get(url_category)
-        cat_json = r_category.json()
+        rCategory = requests.get(url_category).json()
+        #cat_json = r_category.json()
         listCategories = []
         for item in range(nbcat):
-            cat = cat_json['tags'][item]['name'], cat_json['tags'][item]['url'].split('/')[-1]
+            cat = rCategory['tags'][item]['name'], rCategory['tags'][item]['url'].split('/')[-1]
             listCategories.append(cat)
         return listCategories
 

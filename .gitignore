@@ -1,10 +1,4 @@
 envopenfood
-essaitables.py
-drop.py
 .DS_Store
-category.py
-essaiwhile.py
 __pycache__
 openfoodbase.json
-categories.json
-algomenu.py

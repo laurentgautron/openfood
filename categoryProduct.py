@@ -4,49 +4,39 @@ import mysql.connector
 class CategoryProduct:
 
     @staticmethod
-    def create():
+    def create(db):
 
         sql = """ CREATE TABLE IF NOT EXISTS category_product (
-                            category_name VARCHAR(100),
+                            category_id INT,
                             product_code BIGINT,
-                            PRIMARY KEY (category_name,product_code),
-                            CONSTRAINT `fk_category_product_category` FOREIGN KEY (`category_name`) REFERENCES `category`(`name`),
+                            PRIMARY KEY (category_id,product_code),
+                            CONSTRAINT `fk_category_product_category` FOREIGN KEY (`category_id`) REFERENCES `category`(`id`),
                             CONSTRAINT `fk_category_product_product` FOREIGN KEY (`product_code`) REFERENCES `product`(`code`))
                             ENGINE = INNODB;
                         """
-        connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi', database='openfoodbase')
-        sql_use = """ USE openfoodbase; """
-        cursor = connection.cursor()
-        cursor.execute(sql_use)
-        cursor.execute(sql)
-        connection.commit()
-        cursor.close()
-        connection.close()
+        db.execute(sql)
 
-    def insert():
+    @staticmethod
+    def insert(db):
 
         with open('openfoodbase.json', 'r') as f:
             datasopenfood = json.load(f)
-        connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi', database='openfoodbase')
-        cursor = connection.cursor()
         for category, products in datasopenfood.items():
+            sqlcat = """SELECT category.id FROM category
+                        WHERE category.name = %s;"""
+            db.execute(sqlcat, (category,))
+            categoryId = db.fetchone()
             for code in products.keys():
-                sql = """INSERT INTO category_product(category_name, product_code) VALUES (%s,%s);"""
-                cursor.execute(sql, (category, code,))
-        connection.commit()
-        cursor.close()
-        connection.close()
+                sql = """INSERT INTO category_product(category_id, product_code) VALUES (%s,%s);"""
+                db.execute(sql, (categoryId[0], code))
 
-    def menu(categoryChoice):
+    @staticmethod
+    def get_datas(db, choiceCategory):
 
-        connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi', database='openfoodbase')
-        cursor = connection.cursor()
-        sql = """SELECT product.name FROM product JOIN category_product ON product_code = code \
-                    WHERE category_name = %s;"""
-        cursor.execute(sql, categoryChoice)
-        products = cursor.fetchall()
-        connection.commit()
-        cursor.close()
-        connection.close()
-        for indice, product in enumerate(products):
-            print('%d - : %s'%(indice+1, product[0]))
+        sql = """SELECT product.name, code FROM product
+                JOIN category_product ON product_code = code
+                JOIN category ON category_id = category.id
+                WHERE category.name = %s;"""
+        db.execute(sql, (choiceCategory[0],))
+        productList = db.fetchall()
+        return productList

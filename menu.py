@@ -4,47 +4,29 @@ from category import Category
 
 class Menu:
 
-    def __init__(self):
+    @staticmethod
+    def make_choice(itemList=['categories','historic']):
 
-        self.makeChoice = 'make your choice by choosing the corresponding number among the propositions !! '
-        connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi', database='openfoodbase')
-        cursor = connection.cursor()
-        sql = "SELECT name FROM category;"
-        cursor.execute(sql)
-        self.listCategory = cursor.fetchall()
-        cursor.close()
-        connection.close()
-
-    #def is_valid(self,choice):
-
-
-    def first_menu(self):
-
-        os.system('clear')
-        print('----- Main menu -----')
-        print('1 - : consult a categories')
-        print('2 - : consult historic')
-        print('To quit , enter 0')
-        print(self.makeChoice)
-        choice = input('your choice is (enter a number beteween 1 and 2): ')
-        #if is_valid(choice):
-            #return choice
         while True:
+            choice = input('your choice is (enter a number beteween 1 and %d): '%len(itemList))
             try:
                 choice = int(choice)
             except ValueError as error:
                 print('enter a numeral !!')
-            if choice not in (0,1,2,):
-                choice = input('this choice is not a part of the proposals, try again ! ')
-
             else:
-                break
-        return choice
+                if not 0 <= choice < len(itemList)+1:
+                    choice = input('this choice is not a part of the proposals, try again ! ')
+                else:
+                    break
+        return itemList[choice-1]
 
-    def second_menu(self):
+    @staticmethod
+    def display(itemList, nameList):
 
-        Category.menu()
+        os.system('clear')
+        print('make your choice by choosing the corresponding number among the propositions !! ')
         print('To return: r')
         print('To quit : 0')
-        categoryChoice = int(input())
-        return self.listCategory[categoryChoice-1]
+        print('------ %s ------'%nameList)
+        for indice, value in enumerate(itemList):
+            print(' %d -  %s'%(indice+1, value))
