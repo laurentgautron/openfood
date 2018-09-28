@@ -5,7 +5,12 @@ class Connection:
 
     def __init__(self):
 
-        self.connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi')
+        config = {'host':'localhost','user':'','password':''}
+        nom = input('entrez votre nom d\'utilisateur :')
+        password = input('entre votre mot de passe : ')
+        config['user'] = nom
+        config['password'] = password
+        self.connection = mysql.connector.connect(**config)
         atexit.register(self.disconnect)
 
     def __enter__(self):
