@@ -47,10 +47,13 @@ class Main:
                 substitute = Product.propose_substitute(db, choiceCategory, choiceProduct[1])
                 if substitute !=0:
                     print('details for substitute')
-                    Menu.display(substitute, 'details substitute')
-                    Historic.insert(db, substitute[0], choiceProduct[1])
+                    detailSubstitute = Product.show_details(db, substitute)
+                    Menu.display(detailSubstitute, 'details substitute')
+                    Historic.insert(db, substitute, choiceProduct[1])
             else:
                 historics = Historic.get_datas(db)
+                print(historics)
+                input()
                 if historics == None:
                     print('You have no historic for the moment')
                 else:

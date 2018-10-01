@@ -12,7 +12,6 @@ class Product:
                     nutri_score VARCHAR(1),
                     description TEXT(100),
                     link VARCHAR(255),
-                    store VARCHAR(255),
                     PRIMARY KEY(code))
                     ENGINE = INNODB; """
         db.execute(sql)
@@ -51,18 +50,17 @@ class Product:
                     bestScore = result[indice][1]
                     place = indice
                 indice += 1
-            sqlsubstitute = """SELECT * FROM product WHERE code = %s;"""
-            db.execute(sqlsubstitute, (result[place][0],))
-            substitute = db.fetchone()
-            return substitute
+            return result[place][0]
         else:
-            print('il n\'y a pas de substitut possible pour cet aliment')
+            print('There is no substitute for this product !!')
             return 0
 
     @staticmethod
-    def show_details(db, choiceProduct):
+    def show_details(db, product):
 
-        sql = """SELECT * FROM product WHERE code = %s;"""
-        db.execute(sql, (choiceProduct,))
+        sql = """SELECT product.*, store.name FROM product \
+                                JOIN store_product ON code_pro_store = code \
+                                JOIN store ON store.id = id_store WHERE code = %s;"""
+        db.execute(sql, (product,))
         details = db.fetchone()
         return details

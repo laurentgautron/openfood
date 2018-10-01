@@ -1,10 +1,12 @@
 import mysql.connector
 import atexit
+import os
 
 class Connection:
 
     def __init__(self):
 
+        os.system('clear')
         config = {'host':'localhost','user':'','password':''}
         nom = input('entrez votre nom d\'utilisateur :')
         password = input('entre votre mot de passe : ')

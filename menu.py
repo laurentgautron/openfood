@@ -29,11 +29,12 @@ class Menu:
         if nameList == 'historics':
             for values in itemList:
                 print('--- Userchoice :%s ------ Substitute : %s'%(values[0],values[1]))
-        print('------ %s ------'%nameList)
-        for indice, value in enumerate(itemList):
-            if nameList == 'Main menu':
-                print(' %d -  %s'%(indice+1, value))
-            elif nameList in ('details','details substitute'):
-                print(' -  %s'%value)
-            else:
-                print(' %d -  %s'%(indice+1, value[0]))
+        else:
+            print('------ %s ------'%nameList)
+            for indice, value in enumerate(itemList):
+                if nameList == 'Main menu':
+                    print(' %d -  %s'%(indice+1, value))
+                elif nameList in ('details','details substitute'):
+                    print(' -  %s'%value)
+                else:
+                    print(' %d -  %s'%(indice+1, value[0]))
