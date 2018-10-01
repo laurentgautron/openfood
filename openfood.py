@@ -28,11 +28,13 @@ class Main:
 
     def use_openfood(self, db):
 
-        choice = 'a'
-        while choice != 'q':
+        os.system('clear')
+        choice = 'y'
+        print('make your choice by choosing the corresponding number among the propositions !! ')
+        while choice == 'y':
             Menu.display(['categories', 'historic'],'Main menu')
-            choice = Menu.make_choice()
-            if choice == 'categories':
+            choiceMenu = Menu.make_choice()
+            if choiceMenu == 'categories':
                 categories = Category.get_datas(db)
                 Menu.display(categories, 'Categories')
                 choiceCategory = Menu.make_choice(categories)
@@ -40,15 +42,24 @@ class Main:
                 Menu.display(products, 'Products')
                 choiceProduct = Menu.make_choice(products)
                 details = Product.show_details(db, choiceProduct[1])
+                print('details for product: ')
                 Menu.display(details, 'details')
                 substitute = Product.propose_substitute(db, choiceCategory, choiceProduct[1])
-                Menu.display(substitute, 'details substitute')
-                Historic.insert(db, substitute[0], choiceProduct[1])
-            elif choice == 'historics':
+                if substitute !=0:
+                    print('details for substitute')
+                    Menu.display(substitute, 'details substitute')
+                    Historic.insert(db, substitute[0], choiceProduct[1])
+            else:
                 historics = Historic.get_datas(db)
-                print(historics)
-                input()
-                Menu.display(historics, 'historics')
+                if historics == None:
+                    print('You have no historic for the moment')
+                else:
+                    Menu.display(historics, 'historics')
+            choice= input('voulez-vous refaire un choix ? (y/n)')
+            while choice not in ('y', 'n'):
+                choice = input('choose (Y)es or (N)o : ')
+                
+
                 
 
     def openfood(self):

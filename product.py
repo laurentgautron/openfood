@@ -42,18 +42,22 @@ class Product:
                    WHERE category.name = %s AND product.nutri_score < (SELECT nutri_score FROM product WHERE code = %s);"""
         db.execute(sqlresearch, (choiceCategory[0], code))
         result = db.fetchall()
-        bestScore = 'e'
-        place = 0
-        indice = 0
-        while (indice < len(result)) and (bestScore != 'a'):
-            if result[indice][1] < bestScore:
-                bestScore = result[indice][1]
-                place = indice
-            indice += 1
-        sqlsubstitute = """SELECT * FROM product WHERE code = %s;"""
-        db.execute(sqlsubstitute, (result[place][0],))
-        substitute = db.fetchone()
-        return substitute
+        if len(result) > 0:
+            bestScore = 'e'
+            place = 0
+            indice = 0
+            while (indice < len(result)) and (bestScore != 'a'):
+                if result[indice][1] < bestScore:
+                    bestScore = result[indice][1]
+                    place = indice
+                indice += 1
+            sqlsubstitute = """SELECT * FROM product WHERE code = %s;"""
+            db.execute(sqlsubstitute, (result[place][0],))
+            substitute = db.fetchone()
+            return substitute
+        else:
+            print('il n\'y a pas de substitut possible pour cet aliment')
+            return 0
 
     @staticmethod
     def show_details(db, choiceProduct):

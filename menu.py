@@ -8,14 +8,15 @@ class Menu:
     def make_choice(itemList=['categories','historic']):
 
         while True:
-            choice = input('your choice is (enter a number beteween 1 and %d): '%len(itemList))
             try:
-                choice = int(choice)
+                choice = int(input('your choice is (enter a number beteween 1 and %d): '%len(itemList)))
             except ValueError as error:
                 print('enter a numeral !!')
+                continue
             else:
                 if not 0 <= choice < len(itemList)+1:
-                    choice = input('this choice is not a part of the proposals, try again ! ')
+                    print('this choice is not a part of the proposals, try again ! ')
+                    continue
                 else:
                     break
         return itemList[choice-1]
@@ -23,10 +24,16 @@ class Menu:
     @staticmethod
     def display(itemList, nameList):
 
-        os.system('clear')
-        print('make your choice by choosing the corresponding number among the propositions !! ')
-        print('To return: r')
-        print('To quit : 0')
+        if nameList not in ('details', 'details substitute'):
+            os.system('clear')
+        if nameList == 'historics':
+            for values in itemList:
+                print('--- Userchoice :%s ------ Substitute : %s'%(values[0],values[1]))
         print('------ %s ------'%nameList)
         for indice, value in enumerate(itemList):
-            print(' %d -  %s'%(indice+1, value))
+            if nameList == 'Main menu':
+                print(' %d -  %s'%(indice+1, value))
+            elif nameList in ('details','details substitute'):
+                print(' -  %s'%value)
+            else:
+                print(' %d -  %s'%(indice+1, value[0]))
