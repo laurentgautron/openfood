@@ -32,6 +32,8 @@ class Main:
             Menu.display(['categories', 'historic'],'Main menu')
             print('make your choice by choosing the corresponding number among the propositions !! ')
             choiceMenu = Menu.make_choice()
+            if choice == 0:
+                break
             if choiceMenu == 'categories':
                 categories = Category.get_datas()
                 Menu.display(categories, 'Categories')
