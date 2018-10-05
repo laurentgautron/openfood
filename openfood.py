@@ -26,38 +26,45 @@ class Main:
 
     def use_openfood(self):
 
-        os.system('clear')
         choice = 'y'
         while choice == 'y':
+            os.system('clear')
             Menu.display(['categories', 'historic'],'Main menu')
             print('make your choice by choosing the corresponding number among the propositions !! ')
             choiceMenu = Menu.make_choice()
-            if choice == 0:
+            if choiceMenu == 0:
                 break
-            if choiceMenu == 'categories':
+            elif choiceMenu == 'categories':
                 categories = Category.get_datas()
                 Menu.display(categories, 'Categories')
                 choiceCategory = Menu.make_choice(categories)
-                products = CategoryProduct.get_datas(choiceCategory)
-                Menu.display(products, 'Products')
-                choiceProduct = Menu.make_choice(products)
-                details = Product.show_details(choiceProduct[1])
-                print('details for product: ')
-                Menu.display(details, 'details')
-                substitute = Product.propose_substitute(choiceCategory, choiceProduct[1])
-                if substitute !=0:
-                    print('details for substitute')
-                    detailSubstitute = Product.show_details(substitute)
-                    Menu.display(detailSubstitute, 'details substitute')
-                    Historic.insert(substitute, choiceProduct[1])
-            else:
+                if choiceCategory == 0:
+                    break
+                else:
+                    products = CategoryProduct.get_datas(choiceCategory)
+                    Menu.display(products, 'Products')
+                    choiceProduct = Menu.make_choice(products)
+                    if choiceProduct == 0:
+                        break
+                    else:
+                        details = Product.show_details(choiceProduct[1])
+                        print('details for product: ')
+                        Menu.display(details, 'details')
+                        substitute = Product.propose_substitute(choiceCategory, choiceProduct[1])
+                        if substitute !=0:
+                            print('details for substitute')
+                            detailSubstitute = Product.show_details(substitute)
+                            Menu.display(detailSubstitute, 'details substitute')
+                            Historic.insert(substitute, choiceProduct[1])
+            elif choiceMenu == 'historic':
                 historics = Historic.get_datas()
                 Menu.display(historics, 'historics')
                 if historics == []:
                     print('You have no historic for the moment')
-            choice= input('Do you want redo a choice ? (y/n)')
-            while choice not in ('y', 'n'):
-                choice = input('choose (Y)es or (N)o : ')
+                choice = input('go to the Main menu ? (y/n)')
+                while choice not in ('y','n'):
+                    print('choose \'y\' or \'n\'')
+
                 
 
                 

@@ -14,7 +14,7 @@ class Menu:
                 print('enter a numeral !!')
                 continue
             else:
-                if not 0 < choice < len(itemList)+1:
+                if not 0 <= choice < len(itemList)+1:
                     print('this choice is not a part of the proposals, try again ! ')
                     continue
                 else:
