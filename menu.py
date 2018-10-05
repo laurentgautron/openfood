@@ -14,12 +14,15 @@ class Menu:
                 print('enter a numeral !!')
                 continue
             else:
-                if not 0 <= choice < len(itemList)+1:
+                if not 0 < choice < len(itemList)+1:
                     print('this choice is not a part of the proposals, try again ! ')
                     continue
                 else:
                     break
-        return itemList[choice-1]
+        if choice == 0:
+            return choice
+        else:
+            return itemList[choice-1]
 
     @staticmethod
     def display(itemList, nameList):
@@ -38,3 +41,4 @@ class Menu:
                     print(' -  %s'%value)
                 else:
                     print(' %d -  %s'%(indice+1, value[0]))
+            print('to quit :(0)')

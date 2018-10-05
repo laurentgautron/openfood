@@ -1,10 +1,11 @@
 import json
 import mysql.connector
+from connection import Connection
 
 class Product:
 
     @staticmethod
-    def create(db):
+    def create():
 
         sql = """ CREATE TABLE IF NOT EXISTS product (
                     code BIGINT NOT NULL,
@@ -14,10 +15,11 @@ class Product:
                     link VARCHAR(255),
                     PRIMARY KEY(code))
                     ENGINE = INNODB; """
-        db.execute(sql)
+        with Connection.get_instance() as cursor:
+            cursor.execute(sql)
 
     @staticmethod
-    def insert(db):
+    def insert(cursor):
 
         with open('openfoodbase.json', 'r') as f:
             datasopenfood = json.load(f)
@@ -30,17 +32,18 @@ class Product:
                     datasProduct = (code,values['name'], values['nutri_score'],values['link'], values['description'])
                     sql = """INSERT INTO product(code, name, nutri_score, link, description)
                             VALUES (%s, %s, %s, %s, %s);"""
-                    db.execute(sql, datasProduct)
+                    cursor.execute(sql, datasProduct)
 
     @staticmethod
-    def propose_substitute(db, choiceCategory, code):
+    def propose_substitute(choiceCategory, code):
 
         sqlresearch = """SELECT code, nutri_score FROM product 
                    JOIN category_product ON code = product_code
                    JOIN category ON category.id = category_id
                    WHERE category.name = %s AND product.nutri_score < (SELECT nutri_score FROM product WHERE code = %s);"""
-        db.execute(sqlresearch, (choiceCategory[0], code))
-        result = db.fetchall()
+        with Connection.get_instance() as cursor:
+            cursor.execute(sqlresearch, (choiceCategory[0], code))
+            result = cursor.fetchall()
         if len(result) > 0:
             bestScore = 'e'
             place = 0
@@ -56,11 +59,12 @@ class Product:
             return 0
 
     @staticmethod
-    def show_details(db, product):
+    def show_details(product):
 
         sql = """SELECT product.*, store.name FROM product \
                                 JOIN store_product ON code_pro_store = code \
                                 JOIN store ON store.id = id_store WHERE code = %s;"""
-        db.execute(sql, (product,))
-        details = db.fetchone()
+        with Connection.get_instance() as cursor:
+            cursor.execute(sql, (product,))
+            details = cursor.fetchone()
         return details

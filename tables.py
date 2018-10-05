@@ -5,26 +5,28 @@ from store import Store
 from storeProduct import StoreProduct
 from product import Product
 from historic import Historic
+from connection import Connection
 
 class Tables:
 
     @staticmethod
-    def creation(db):
+    def creation():
 
-        sql = """ CREATE DATABASE IF NOT EXISTS openfoodbase CHARACTER SET utf8; """
-        db.execute(sql)
-        Category.create(db)
-        Product.create(db)
-        Store.create(db)
-        CategoryProduct.create(db)
-        StoreProduct.create(db)
-        Historic.create(db)
+        with Connection.get_instance() as cursor:
+            sql = """ CREATE DATABASE IF NOT EXISTS openfoodbase CHARACTER SET utf8; """
+            cousor.execute(sql)
+        Category.create()
+        Product.create()
+        Store.create()
+        CategoryProduct.create()
+        StoreProduct.create()
+        Historic.create()
 
     @staticmethod
-    def fill_tables(db):
+    def fill_tables():
 
-        Category.insert(db)
-        Product.insert(db)
-        Store.insert(db)
-        CategoryProduct.insert(db)
-        StoreProduct.insert(db)
+        Category.insert()
+        Product.insert()
+        Store.insert()
+        CategoryProduct.insert()
+        StoreProduct.insert()
