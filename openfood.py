@@ -56,14 +56,13 @@ class Main:
                             Historic.insert(substitute, choiceProduct[1])
             elif choiceMenu == 'historic':
                 historics = Historic.get_datas()
-                print(historics[0],' et puis ',historics[1])
-                input()
-                for hist in historics:
-                    detailProduct = Product.show_details(hist[0])
-                    detailSubstitute = Product.show_details(hist[1])
-                    Menu.display(detailProduct, 'details product')
-                    Menu.display(detailSubstitute,'details substitute')
-                if historics == []:
+                if historics:
+                    for hist in historics:
+                        detailProduct = Product.show_details(hist[0])
+                        detailSubstitute = Product.show_details(hist[1])
+                        Menu.display(detailProduct, 'details product')
+                        Menu.display(detailSubstitute,'details substitute')
+                else:
                     print('You have no historic for the moment')
             choice = input('go to the Main menu ? (y/n)')
             while choice not in ('y','n'):
