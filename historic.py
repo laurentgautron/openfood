@@ -32,9 +32,7 @@ class Historic:
     def get_datas():
 
         with Connection.get_instance() as cursor:
-            sql = """SELECT prod1.name AS userchoice, prod2.name AS substitute \
-                FROM historic JOIN product prod1 ON prod1.code = code_to_substitute \
-                JOIN product prod2 ON prod2.code = substitute_code;"""
+            sql = """SELECT * FROM historic;"""
             cursor.execute(sql)
             codeSubstitute = cursor.fetchall()
         return codeSubstitute

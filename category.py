@@ -23,9 +23,10 @@ class Category:
 
         with open('openfoodbase.json', 'r') as f:
             datasopenfood = json.load(f)
-        for category in datasopenfood.keys():
-            sql = """ INSERT INTO category(name) VALUES (%s);"""
-            cursor.execute(sql, (category,))
+        with Connection.get_instance() as cursor:
+            for category in datasopenfood.keys():
+                sql = """ INSERT INTO category(name) VALUES (%s);"""
+                cursor.execute(sql, (category,))
 
     @staticmethod
     def get_datas():

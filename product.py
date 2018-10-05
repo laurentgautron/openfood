@@ -19,20 +19,21 @@ class Product:
             cursor.execute(sql)
 
     @staticmethod
-    def insert(cursor):
+    def insert():
 
         with open('openfoodbase.json', 'r') as f:
             datasopenfood = json.load(f)
         listCodes = []
-        for datas in datasopenfood.values():
-            for code, values in datas.items():
-                if code not in listCodes:
-                    listCodes.append(code)
-                    code = int(code)
-                    datasProduct = (code,values['name'], values['nutri_score'],values['link'], values['description'])
-                    sql = """INSERT INTO product(code, name, nutri_score, link, description)
-                            VALUES (%s, %s, %s, %s, %s);"""
-                    cursor.execute(sql, datasProduct)
+        with Connection.get_instance() as cursor:
+            for datas in datasopenfood.values():
+                for code, values in datas.items():
+                    if code not in listCodes:
+                        listCodes.append(code)
+                        code = int(code)
+                        datasProduct = (code,values['name'], values['nutri_score'],values['link'], values['description'])
+                        sql = """INSERT INTO product(code, name, nutri_score, link, description)
+                                VALUES (%s, %s, %s, %s, %s);"""
+                        cursor.execute(sql, datasProduct)
 
     @staticmethod
     def propose_substitute(choiceCategory, code):

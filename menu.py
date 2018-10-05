@@ -7,6 +7,7 @@ class Menu:
     @staticmethod
     def make_choice(itemList=['categories','historic']):
 
+        print('to quit :(0)')
         while True:
             try:
                 choice = int(input('your choice is (enter a number beteween 1 and %d): '%len(itemList)))
@@ -27,7 +28,7 @@ class Menu:
     @staticmethod
     def display(itemList, nameList):
 
-        if nameList not in ('details', 'details substitute'):
+        if nameList not in ('details product', 'details substitute'):
             os.system('clear')
         if nameList == 'historics':
             for values in itemList:
@@ -37,8 +38,7 @@ class Menu:
             for indice, value in enumerate(itemList):
                 if nameList == 'Main menu':
                     print(' %d -  %s'%(indice+1, value))
-                elif nameList in ('details','details substitute'):
+                elif nameList in ('details product','details substitute'):
                     print(' -  %s'%value)
                 else:
                     print(' %d -  %s'%(indice+1, value[0]))
-            print('to quit :(0)')

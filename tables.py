@@ -14,7 +14,7 @@ class Tables:
 
         with Connection.get_instance() as cursor:
             sql = """ CREATE DATABASE IF NOT EXISTS openfoodbase CHARACTER SET utf8; """
-            cousor.execute(sql)
+            cursor.execute(sql)
         Category.create()
         Product.create()
         Store.create()

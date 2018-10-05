@@ -48,26 +48,27 @@ class Main:
                         break
                     else:
                         details = Product.show_details(choiceProduct[1])
-                        print('details for product: ')
-                        Menu.display(details, 'details')
+                        Menu.display(details, 'details product')
                         substitute = Product.propose_substitute(choiceCategory, choiceProduct[1])
                         if substitute !=0:
-                            print('details for substitute')
                             detailSubstitute = Product.show_details(substitute)
                             Menu.display(detailSubstitute, 'details substitute')
                             Historic.insert(substitute, choiceProduct[1])
             elif choiceMenu == 'historic':
                 historics = Historic.get_datas()
-                Menu.display(historics, 'historics')
+                print(historics[0],' et puis ',historics[1])
+                input()
+                for hist in historics:
+                    detailProduct = Product.show_details(hist[0])
+                    detailSubstitute = Product.show_details(hist[1])
+                    Menu.display(detailProduct, 'details product')
+                    Menu.display(detailSubstitute,'details substitute')
                 if historics == []:
                     print('You have no historic for the moment')
-                choice = input('go to the Main menu ? (y/n)')
-                while choice not in ('y','n'):
-                    print('choose \'y\' or \'n\'')
-
-                
-
-                
+            choice = input('go to the Main menu ? (y/n)')
+            while choice not in ('y','n'):
+                print('choose \'y\' or \'n\'')
+       
 
     def openfood(self):
 

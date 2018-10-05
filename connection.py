@@ -7,7 +7,20 @@ class Connection:
 
     def __init__(self):
         __class__.INSTANCE = self
-        self.connection = mysql.connector.connect(host='localhost', user='lolo', password='cestmoi', database='openfoodbase')
+        config = {'host':'localhost'}
+        userName = input('your username : ')
+        pwd = input('our password : ')
+        config['user'] = userName
+        config['password'] = pwd
+        self.connection = mysql.connector.connect(**config)
+        self.cursor = self.connection.cursor()
+        sql = "CREATE DATABASE IF NOT EXISTS openfoodbase CHARACTER SET utf8"
+        self.cursor.execute(sql)
+        self.cursor.close()
+        self.connection.commit()
+        self.connection.close()
+        config['database'] = 'openfoodbase'
+        self.connection = mysql.connector.connect(**config)
         atexit.register(self.disconnect)
 
     def __enter__(self):
