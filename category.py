@@ -1,13 +1,13 @@
-
+""" all opération cooresponding to a SQL code in category table """
 import json
-import mysql.connector
-import os
 from connection import Connection
 
 class Category:
+    """ class category contain all methods concernig category table """
 
     @staticmethod
     def create():
+        """ method to create category table """
 
         sql = """ CREATE TABLE IF NOT EXISTS category (
                              id INT NOT NULL AUTO_INCREMENT,
@@ -20,9 +20,10 @@ class Category:
 
     @staticmethod
     def insert():
+        """ method to inser datas in category table """
 
-        with open('openfoodbase.json', 'r') as f:
-            datasopenfood = json.load(f)
+        with open('openfoodbase.json', 'r') as openfoodfile:
+            datasopenfood = json.load(openfoodfile)
         with Connection.get_instance() as cursor:
             for category in datasopenfood.keys():
                 sql = """ INSERT INTO category(name) VALUES (%s);"""
@@ -30,9 +31,10 @@ class Category:
 
     @staticmethod
     def get_datas():
+        """ method to get datas from category """
 
         sql = """SELECT name, id FROM category;"""
         with Connection.get_instance() as cursor:
             cursor.execute(sql)
-            categoryList = cursor.fetchall()
-        return categoryList
+            categorylist = cursor.fetchall()
+        return categorylist
