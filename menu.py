@@ -1,12 +1,11 @@
-import mysql.connector
+""" treat the menu choice and display menu list """
 import os
-from category import Category
 
 class Menu:
-
+    """ contain two static methods : make_a_choice and display """
     @staticmethod
-    def make_choice(itemList=['categories','historic']):
-
+    def make_choice(itemList=['categories', 'historic']):
+        """ return the menu choice after testing if choice is an integer """
         print('to quit :(0)')
         while True:
             try:
@@ -27,18 +26,18 @@ class Menu:
 
     @staticmethod
     def display(itemList, nameList):
-
+        """ dispaly the menu according to the list in settings """
         if nameList not in ('details product', 'details substitute'):
             os.system('clear')
         if nameList == 'historics':
-            for values in itemList:
-                print('--- Userchoice :%s ------ Substitute : %s'%(values[0],values[1]))
+            for val in itemList:
+                print('--- Userchoice :%s ------ Substitute : %s' %(val[0],values[1]))
         else:
             print('------ %s ------'%nameList)
             for indice, value in enumerate(itemList):
                 if nameList == 'Main menu':
                     print(' %d -  %s'%(indice+1, value))
-                elif nameList in ('details product','details substitute'):
+                elif nameList in ('details product', 'details substitute'):
                     print(' -  %s'%value)
                 else:
                     print(' %d -  %s'%(indice+1, value[0]))

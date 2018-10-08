@@ -1,35 +1,35 @@
+""" main program for the openfood application """
+import os
 from tables import Tables
 from datas import Datas
 from menu import Menu
-from categoryProduct import CategoryProduct
+from categoryproduct import CategoryProduct
 from category import Category
 from historic import Historic
 from product import Product
-import os
 
 class Main:
 
     def __init__(self):
-
+        """ create an instance of Datas and test if there is the openfoodbase.json file """
         self.find = os.path.isfile('openfoodbase.json')
         self.datas = Datas()
         
     def preparations(self):
-
+        """ methods to make a json file, get datas, create tables and fill them """
         os.system('clear')
         print('get datas and create a json file...')
         self.datas.mkjsonfile()
         print('create and fille tables...')
         Tables.creation()
-        Tables.fill_tables()
-        
+        Tables.fill_tables() 
 
     def use_openfood(self):
-
+        """ display menu according user's choice and record his choice """
         choice = 'y'
         while choice == 'y':
             os.system('clear')
-            Menu.display(['categories', 'historic'],'Main menu')
+            Menu.display(['categories', 'historic'], 'Main menu')
             print('make your choice by choosing the corresponding number among the propositions !! ')
             choiceMenu = Menu.make_choice()
             if choiceMenu == 0:
@@ -50,7 +50,7 @@ class Main:
                         details = Product.show_details(choiceProduct[1])
                         Menu.display(details, 'details product')
                         substitute = Product.propose_substitute(choiceCategory, choiceProduct[1])
-                        if substitute !=0:
+                        if substitute != 0:
                             detailSubstitute = Product.show_details(substitute)
                             Menu.display(detailSubstitute, 'details substitute')
                             Historic.insert(substitute, choiceProduct[1])
@@ -61,21 +61,15 @@ class Main:
                         detailProduct = Product.show_details(hist[0])
                         detailSubstitute = Product.show_details(hist[1])
                         Menu.display(detailProduct, 'details product')
-                        Menu.display(detailSubstitute,'details substitute')
+                        Menu.display(detailSubstitute, 'details substitute')
                 else:
                     print('You have no historic for the moment')
             choice = input('go to the Main menu ? (y/n)')
-            while choice not in ('y','n'):
+            while choice not in ('y', 'n'):
                 print('choose \'y\' or \'n\'')
-       
 
     def openfood(self):
-
-        #self.config = {'host':'localhost','user':'','password':''}
-        #nom = input('entrer your user name: ')
-        #password = input('enter your password: ')
-        #self.config['user'] = nom
-        #self.config['password'] = password
+        """ the main function """
         if not self.find:
             self.preparations()
         self.use_openfood()

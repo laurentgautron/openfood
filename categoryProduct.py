@@ -1,8 +1,9 @@
+""" all opération cooresponding to a SQL code in category_product table """
 import json
 from connection import Connection
 
-class Categoryproduct:
-
+class CategoryProduct:
+    """ class category contain all methods concernig category_product table """
     @staticmethod
     def create():
         """ method to create catagory_product table """
@@ -39,7 +40,7 @@ class Categoryproduct:
         sql = """SELECT product.name, code FROM product
                 JOIN category_product ON product_code = code
                 JOIN category ON category_id = category.id
-                WHERE category.name = %s;"""
+                WHERE category.name = %s ORDER BY name;"""
         with Connection.get_instance() as cursor:
             cursor.execute(sql, (choicecategory[0],))
             productlist = cursor.fetchall()

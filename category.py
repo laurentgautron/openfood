@@ -8,7 +8,6 @@ class Category:
     @staticmethod
     def create():
         """ method to create category table """
-
         sql = """ CREATE TABLE IF NOT EXISTS category (
                              id INT NOT NULL AUTO_INCREMENT,
                              name VARCHAR(100), 
@@ -33,7 +32,7 @@ class Category:
     def get_datas():
         """ method to get datas from category """
 
-        sql = """SELECT name, id FROM category;"""
+        sql = """SELECT name, id FROM category ORDER BY name;"""
         with Connection.get_instance() as cursor:
             cursor.execute(sql)
             categorylist = cursor.fetchall()

@@ -1,12 +1,12 @@
+""" all opération cooresponding to a SQL code in product table """
 import json
-import mysql.connector
 from connection import Connection
 
 class Product:
-
+    """ class category contain all methods concernig product table """
     @staticmethod
     def create():
-
+        """ create table product """
         sql = """ CREATE TABLE IF NOT EXISTS product (
                     code BIGINT NOT NULL,
                     name VARCHAR(255),
@@ -20,9 +20,9 @@ class Product:
 
     @staticmethod
     def insert():
-
-        with open('openfoodbase.json', 'r') as f:
-            datasopenfood = json.load(f)
+        """ insert datas in table """
+        with open('openfoodbase.json', 'r') as openfoodfile:
+            datasopenfood = json.load(openfoodfile)
         listCodes = []
         with Connection.get_instance() as cursor:
             for datas in datasopenfood.values():
@@ -30,17 +30,18 @@ class Product:
                     if code not in listCodes:
                         listCodes.append(code)
                         code = int(code)
-                        datasProduct = (code,values['name'], values['nutri_score'],values['link'], values['description'])
+                        datasProduct = (code, values['name'], values['nutri_score'], values['link'], values['description'])
                         sql = """INSERT INTO product(code, name, nutri_score, link, description)
                                 VALUES (%s, %s, %s, %s, %s);"""
                         cursor.execute(sql, datasProduct)
 
     @staticmethod
     def propose_substitute(choiceCategory, code):
-
-        sqlresearch = """SELECT code, nutri_score FROM product 
-                   JOIN category_product ON code = product_code
-                   JOIN category ON category.id = category_id
+        """ find a substitute for a product: select all products with best nutri_score \
+            and choose the last one , or the first with the best nutri-score : a """
+        sqlresearch = """SELECT code, nutri_score FROM product \
+                   JOIN category_product ON code = product_code \
+                   JOIN category ON category.id = category_id \
                    WHERE category.name = %s AND product.nutri_score < (SELECT nutri_score FROM product WHERE code = %s);"""
         with Connection.get_instance() as cursor:
             cursor.execute(sqlresearch, (choiceCategory[0], code))
@@ -61,7 +62,7 @@ class Product:
 
     @staticmethod
     def show_details(product):
-
+        """ show all field for a product code from product table """
         sql = """SELECT product.*, store.name FROM product \
                                 JOIN store_product ON code_pro_store = code \
                                 JOIN store ON store.id = id_store WHERE code = %s;"""
