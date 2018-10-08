@@ -1,9 +1,9 @@
-""" all opération cooresponding to a SQL code in category_product table """
+""" all opération cooresponding to a SQL code in category_product table ."""
 import json
 from connection import Connection
 
 class CategoryProduct:
-    """ class category contain all methods concernig category_product table """
+    """ class category contain all methods concernig category_product table ."""
     @staticmethod
     def create():
         """ method to create catagory_product table """
@@ -20,7 +20,7 @@ class CategoryProduct:
 
     @staticmethod
     def insert():
-        """ method to insert datas in category_product table """
+        """ method to insert datas in category_product table ."""
         with open('openfoodbase.json', 'r') as openfoodfile:
             datasopenfood = json.load(openfoodfile)
         with Connection.get_instance() as cursor:
@@ -36,7 +36,7 @@ class CategoryProduct:
 
     @staticmethod
     def get_datas(choicecategory):
-        """ method to get datas from category_product table """
+        """ method to get datas from category_product table ."""
         sql = """SELECT product.name, code FROM product
                 JOIN category_product ON product_code = code
                 JOIN category ON category_id = category.id

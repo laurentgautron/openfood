@@ -1,11 +1,11 @@
-""" all opération cooresponding to a SQL code in historic table """
+""" all opération cooresponding to a SQL code in historic table ."""
 from connection import Connection
 
 class Historic:
-    """ class category contain all methods concernig historic table """
+    """ class category contain all methods concernig historic table ."""
     @staticmethod
     def create():
-        """ create histotic table """
+        """ create histotic table ."""
         sql = """ CREATE TABLE IF NOT EXISTS historic (
                     code_to_substitute BIGINT NOT NULL,
                     substitute_code BIGINT,
@@ -16,7 +16,7 @@ class Historic:
 
     @staticmethod
     def insert(substitute, code):
-        """ insert datas in table historic """
+        """ insert datas in table historic ."""
         with Connection.get_instance() as cursor:
             sql = "SELECT count(code_to_substitute) FROM historic WHERE code_to_substitute = %s;"
             cursor.execute(sql, (code,))
@@ -30,7 +30,7 @@ class Historic:
 
     @staticmethod
     def get_datas():
-        """ recover datas from historic table in a dictionnary """
+        """ recover datas from historic table in a dictionnary ."""
         with Connection.get_instance() as cursor:
             sql = """SELECT * FROM historic;"""
             cursor.execute(sql)

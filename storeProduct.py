@@ -1,9 +1,9 @@
-""" all opération cooresponding to a SQL code in store_product table """
+""" all opération cooresponding to a SQL code in store_product table ."""
 import json
 from connection import Connection
 
 class StoreProduct:
-    """ class category contain all methods concernig store_product table """
+    """ class category contain all methods concernig store_product table ."""
     @staticmethod
     def create():
         """ create store_product table"""
@@ -19,7 +19,7 @@ class StoreProduct:
 
     @staticmethod
     def insert():
-        """ insert datas from openfood json file into store_product"""
+        """ insert datas from openfood json file into store_product ."""
         with open('openfoodbase.json', 'r') as openfoodfile:
             datasopenfood = json.load(openfoodfile)
         listCode = []

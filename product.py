@@ -1,9 +1,9 @@
-""" all opération cooresponding to a SQL code in product table """
+""" all opération cooresponding to a SQL code in product table ."""
 import json
 from connection import Connection
 
 class Product:
-    """ class category contain all methods concernig product table """
+    """ class category contain all methods concernig product table ."""
     @staticmethod
     def create():
         """ create table product """
@@ -20,7 +20,7 @@ class Product:
 
     @staticmethod
     def insert():
-        """ insert datas in table """
+        """ insert datas in table ."""
         with open('openfoodbase.json', 'r') as openfoodfile:
             datasopenfood = json.load(openfoodfile)
         listCodes = []
@@ -38,7 +38,7 @@ class Product:
     @staticmethod
     def propose_substitute(choiceCategory, code):
         """ find a substitute for a product: select all products with best nutri_score \
-            and choose the last one , or the first with the best nutri-score : a """
+            and choose the last one , or the first with the best nutri-score : a ."""
         sqlresearch = """SELECT code, nutri_score FROM product \
                    JOIN category_product ON code = product_code \
                    JOIN category ON category.id = category_id \
@@ -62,7 +62,7 @@ class Product:
 
     @staticmethod
     def show_details(product):
-        """ show all field for a product code from product table """
+        """ show all field for a product code from product table ."""
         sql = """SELECT product.*, store.name FROM product \
                                 JOIN store_product ON code_pro_store = code \
                                 JOIN store ON store.id = id_store WHERE code = %s;"""

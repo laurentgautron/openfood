@@ -1,13 +1,13 @@
-""" all opération cooresponding to a SQL code in category table """
+""" all opération cooresponding to a SQL code in category table ."""
 import json
 from connection import Connection
 
 class Category:
-    """ class category contain all methods concernig category table """
+    """ class category contain all methods concernig category table ."""
 
     @staticmethod
     def create():
-        """ method to create category table """
+        """ method to create category table ."""
         sql = """ CREATE TABLE IF NOT EXISTS category (
                              id INT NOT NULL AUTO_INCREMENT,
                              name VARCHAR(100), 
@@ -19,7 +19,7 @@ class Category:
 
     @staticmethod
     def insert():
-        """ method to inser datas in category table """
+        """ method to inser datas in category table ."""
 
         with open('openfoodbase.json', 'r') as openfoodfile:
             datasopenfood = json.load(openfoodfile)
@@ -30,7 +30,7 @@ class Category:
 
     @staticmethod
     def get_datas():
-        """ method to get datas from category """
+        """ method to get datas from category ."""
 
         sql = """SELECT name, id FROM category ORDER BY name;"""
         with Connection.get_instance() as cursor:

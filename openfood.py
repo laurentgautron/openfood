@@ -1,4 +1,4 @@
-""" main program for the openfood application """
+""" main program for the openfood application ."""
 import os
 from tables import Tables
 from datas import Datas
@@ -11,12 +11,12 @@ from product import Product
 class Main:
 
     def __init__(self):
-        """ create an instance of Datas and test if there is the openfoodbase.json file """
+        """ create an instance of Datas and test if there is the openfoodbase.json file ."""
         self.find = os.path.isfile('openfoodbase.json')
         self.datas = Datas()
         
     def preparations(self):
-        """ methods to make a json file, get datas, create tables and fill them """
+        """ methods to make a json file, get datas, create tables and fill them ."""
         os.system('clear')
         print('get datas and create a json file...')
         self.datas.mkjsonfile()
@@ -25,7 +25,7 @@ class Main:
         Tables.fill_tables() 
 
     def use_openfood(self):
-        """ display menu according user's choice and record his choice """
+        """ display menu according user's choice and record his choice ."""
         choice = 'y'
         while choice == 'y':
             os.system('clear')
@@ -69,7 +69,7 @@ class Main:
                 print('choose \'y\' or \'n\'')
 
     def openfood(self):
-        """ the main function """
+        """ the main function ."""
         if not self.find:
             self.preparations()
         self.use_openfood()

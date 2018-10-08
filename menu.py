@@ -1,11 +1,11 @@
-""" treat the menu choice and display menu list """
+""" treat the menu choice and display menu list ."""
 import os
 
 class Menu:
-    """ contain two static methods : make_a_choice and display """
+    """ contain two static methods : make_a_choice and display ."""
     @staticmethod
     def make_choice(itemList=['categories', 'historic']):
-        """ return the menu choice after testing if choice is an integer """
+        """ return the menu choice after testing if choice is an integer ."""
         print('to quit :(0)')
         while True:
             try:
@@ -26,7 +26,7 @@ class Menu:
 
     @staticmethod
     def display(itemList, nameList):
-        """ dispaly the menu according to the list in settings """
+        """ dispaly the menu according to the list in settings ."""
         if nameList not in ('details product', 'details substitute'):
             os.system('clear')
         if nameList == 'historics':

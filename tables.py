@@ -1,4 +1,4 @@
-""" create and fill al tables at the beginning if openfoodbase.json does not exist"""
+""" create and fill al tables at the beginning if openfoodbase.json does not exist ."""
 from category import Category
 from categoryproduct import CategoryProduct
 from store import Store
@@ -8,10 +8,10 @@ from historic import Historic
 from connection import Connection
 
 class Tables:
-    """ call static methods from tables to create and fill tables """
+    """ call static methods from tables to create and fill tables ."""
     @staticmethod
     def creation():
-        """ create all the tables by calling static method from these tables """
+        """ create all the tables by calling static method from these tables ."""
         with Connection.get_instance() as cursor:
             sql = """ CREATE DATABASE IF NOT EXISTS openfoodbase CHARACTER SET utf8; """
             cursor.execute(sql)
@@ -24,7 +24,7 @@ class Tables:
 
     @staticmethod
     def fill_tables():
-        """ fill the tables after creation except historic table """
+        """ fill the tables after creation except historic table ."""
         Category.insert()
         Product.insert()
         Store.insert()
