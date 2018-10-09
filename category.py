@@ -22,9 +22,9 @@ class Category:
         """ method to inser datas in category table ."""
 
         with open('openfoodbase.json', 'r') as openfoodfile:
-            datasopenfood = json.load(openfoodfile)
+            datas_openfood = json.load(openfoodfile)
         with Connection.get_instance() as cursor:
-            for category in datasopenfood.keys():
+            for category in datas_openfood.keys():
                 sql = """ INSERT INTO category(name) VALUES (%s);"""
                 cursor.execute(sql, (category,))
 
@@ -35,5 +35,5 @@ class Category:
         sql = """SELECT name, id FROM category ORDER BY name;"""
         with Connection.get_instance() as cursor:
             cursor.execute(sql)
-            categorylist = cursor.fetchall()
-        return categorylist
+            category_list = cursor.fetchall()
+        return category_list

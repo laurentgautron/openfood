@@ -11,9 +11,9 @@ class Connection:
         """ construtor which modify INSTANCE form the class , and create database openfoodbase ."""
         __class__.INSTANCE = self
         config = {'host':'localhost'}
-        userName = input('your username : ')
-        pwd = input('our password : ')
-        config['user'] = userName
+        user_name = input('your username : ')
+        pwd = input('your password : ')
+        config['user'] = user_name
         config['password'] = pwd
         self.connection = mysql.connector.connect(**config)
         self.cursor = self.connection.cursor()

@@ -6,75 +6,88 @@ class Datas:
 
     def __init__(self):
         """ to fix nb categories and nb product by categories to extract ."""
-        self.nbCategories = 20
-        self.nbProduct = 30
+        self.nb_categories = 20
+        self.nb_product = 30
 
-    def is_empty(self, lisToTest):
-        """ test if values for a key is empty ."""
+    @staticmethod
+    def is_empty(list_to_test):
+        """ test if values for a key is empty in a dictionnary
+            return a boolean.
+        """
         test = False
-        for key in lisToTest.keys():
-            item = ''.join(lisToTest[key])
-            item = item.replace(' ','')
+        for key in list_to_test.keys():
+            item = ''.join(list_to_test[key])
+            item = item.replace(' ', '')
             if item == '':
                 test = True
         return test
 
-    def filter(self, stores):
-        """  to filter stores: removes spaces and upper case ."""
+    @staticmethod
+    def filter(stores):
+        """  to filter stores: removes spaces and upper case
+             store is the list of store to filter
+             return a filtered list.
+        """
         stores = list(stores.split(','))
-        lisToFilter = []
+        list_to_filter = []
         for store in stores:
-            if store not in lisToFilter:
+            if store not in list_to_filter:
                 store = store.strip()
                 store = store.lower()
-                lisToFilter.append(store)
-        return list(set(lisToFilter))
+                list_to_filter.append(store)
+        return list(set(list_to_filter))
 
-    def get_category(self, nbcat):
-        """ make a list for  the first 20 categories ."""
+    @staticmethod
+    def get_category(nbcat):
+        """ make a list for the first 20 categories
+            return a list of tuples : (the category name, the category name for a request).
+        """
         url_category = 'https://fr.openfoodfacts.org/categories.json'
-        rCategory = requests.get(url_category).json()
+        r_category = requests.get(url_category).json()
         #cat_json = r_category.json()
-        listCategories = []
+        list_categories = []
         for item in range(nbcat):
-            cat = rCategory['tags'][item]['name'], rCategory['tags'][item]['url'].split('/')[-1]
-            listCategories.append(cat)
-        return listCategories
+            #cat his tehe category name without spases, qotations marks : for the url request
+            cat = r_category['tags'][item]['name'], r_category['tags'][item]['url'].split('/')[-1]
+            list_categories.append(cat)
+        return list_categories
 
-    def get_product(self,category, nbProduct):
-        """ create a dictionnary with details for the first 30 product of a category ."""
+    @staticmethod
+    def get_product(category, nb_product):
+        """ create a dictionnary with details for the first 30 product code of a category ."""
         url_product = 'https://fr.openfoodfacts.org/cgi/search.pl?'
         setting = {"action":"process", "tagtype_0":"categories", "tag_contains_0":"contains", "tag_0":category[1],\
-                    "sort_by":"unique_scans_n","page_size":nbProduct,"json":1}
+                    "sort_by":"unique_scans_n", "page_size":nb_product, "json":1}
         r_product = requests.get(url_product, setting)
         product_json = r_product.json()
-        listInfoProduct = {}
-        for item in range(nbProduct):
+        list_inf_product = {}
+        for item in range(nb_product):
             code = product_json['products'][item]['code']
-            listInfoProduct[code] = {'name':' ', 'store':' ', 'description':' ', 'link':' ', 'nutri_score':' '}
+            list_inf_product[code] = {'name':' ', 'store':' ', 'description':' ', 'link':' ', 'nutri_score':' '}
             try:
-                listInfoProduct[code]['name'] = product_json['products'][item]['product_name']
-                listInfoProduct[code]['store'] = self.filter(product_json['products'][item]['stores'])
-                listInfoProduct[code]['description'] = product_json['products'][item]['generic_name_fr']
-                listInfoProduct[code]['link'] = product_json['products'][item]['url']
-                listInfoProduct[code]['nutri_score'] = product_json['products'][item]['nutrition_grade_fr']
+                list_inf_product[code]['name'] = product_json['products'][item]['product_name']
+                list_inf_product[code]['store'] = Datas.filter(product_json['products'][item]['stores'])
+                list_inf_product[code]['description'] = product_json['products'][item]['generic_name_fr']
+                list_inf_product[code]['link'] = product_json['products'][item]['url']
+                list_inf_product[code]['nutri_score'] = product_json['products'][item]['nutrition_grade_fr']
             except KeyError as error:
-                del listInfoProduct[code]
+                del list_inf_product[code]
                 continue
-            if self.is_empty(listInfoProduct[code]):
-                del listInfoProduct[code]
-        return listInfoProduct
+            if Datas.is_empty(list_inf_product[code]):
+                del list_inf_product[code]
+        return list_inf_product
 
-    def record_datas(self, nbCategory, nbProduct):
+    @staticmethod
+    def record_datas(nb_category, nb_product):
         """ make a big dictionnary with categories and products ."""
         dict_datas_product = {}
-        categories = self.get_category(nbCategory)
+        categories = Datas.get_category(nb_category)
         for category in categories:
-            dict_datas_product[category[0]] = self.get_product(category, nbProduct)
+            dict_datas_product[category[0]] = Datas.get_product(category, nb_product)
         return dict_datas_product
 
     def mkjsonfile(self):
         """ make the json file ."""
-        dict_to_json = self.record_datas(self.nbCategories, self.nbProduct)
-        with open('openfoodbase.json', 'w') as jsonfile:
-            json.dump(dict_to_json, jsonfile, indent=4)
+        dict_to_json = Datas.record_datas(self.nb_categories, self.nb_product)
+        with open('openfoodbase.json', 'w') as json_file:
+            json.dump(dict_to_json, json_file, indent=4)

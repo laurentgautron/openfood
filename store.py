@@ -19,13 +19,13 @@ class Store:
     def insert():
         """ insert stores from the openfood json file , into store table ."""
         with open('openfoodbase.json', 'r') as openfoodfile:
-            datasopenfood = json.load(openfoodfile)
-        listStore = []
+            datas_openfood = json.load(openfoodfile)
+        list_store = []
         with Connection.get_instance() as cursor:
-            for data in datasopenfood.values():
+            for data in datas_openfood.values():
                 for datas in data.values():
                     for store in datas['store']:
-                        if store not in listStore:
-                            listStore.append(store)
+                        if store not in list_store:
+                            list_store.append(store)
                             sql = """ INSERT INTO store(name) VALUES (%s); """
                             cursor.execute(sql, (store,))
