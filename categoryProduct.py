@@ -13,8 +13,7 @@ class CategoryProduct:
                             PRIMARY KEY (category_id,product_code),
                             CONSTRAINT `fk_category_product_category` FOREIGN KEY (`category_id`) REFERENCES `category`(`id`),
                             CONSTRAINT `fk_category_product_product` FOREIGN KEY (`product_code`) REFERENCES `product`(`code`))
-                            ENGINE = INNODB;
-                        """
+                            ENGINE = INNODB;"""
         with Connection.get_instance() as cursor:
             cursor.execute(sql)
 

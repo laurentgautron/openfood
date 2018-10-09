@@ -62,6 +62,7 @@ class Main:
                         detailSubstitute = Product.show_details(hist[1])
                         Menu.display(detailProduct, 'details product')
                         Menu.display(detailSubstitute, 'details substitute')
+                        input('press a key to continue !')
                 else:
                     print('You have no historic for the moment')
             choice = input('go to the Main menu ? (y/n)')

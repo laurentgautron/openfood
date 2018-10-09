@@ -8,7 +8,7 @@ class Product:
     def create():
         """ create table product """
         sql = """ CREATE TABLE IF NOT EXISTS product (
-                    code BIGINT NOT NULL,
+                    code BIGINT(13) NOT NULL,
                     name VARCHAR(255),
                     nutri_score VARCHAR(1),
                     description TEXT(100),
