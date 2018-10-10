@@ -58,7 +58,7 @@ class Main:
             elif choice_menu == 'historic':
                 historics = Historic.get_datas()
                 if historics:
-                    for hist in historics:
+                    for indice, hist in enumerate(historics):
                         detail_product = Product.show_details(hist[0])
                         detail_substitute = Product.show_details(hist[1])
                         print()
@@ -66,7 +66,7 @@ class Main:
                         print()
                         Menu.display(detail_substitute, 'details substitute')
                         user_choice = 'a'
-                        while user_choice != 'c':
+                        while user_choice != 'c' or indice != len(historics-1):
                             user_choice = input('press (c) to continue ! or (q) to quit !')
                             if user_choice not in ('c','q'):
                                 continue
