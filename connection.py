@@ -10,10 +10,8 @@ class Connection:
     def __init__(self):
         """ construtor which modify INSTANCE form the class , and create database openfoodbase ."""
         __class__.INSTANCE = self
-        config = {'host':'localhost'}
-        user_name = input('your username : ')
+        config = {'host':'localhost','user':'lolo'}
         pwd = input('your password : ')
-        config['user'] = user_name
         config['password'] = pwd
         self.connection = mysql.connector.connect(**config)
         self.cursor = self.connection.cursor()

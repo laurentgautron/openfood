@@ -65,14 +65,17 @@ class Main:
                         Menu.display(detail_product, 'details product')
                         print()
                         Menu.display(detail_substitute, 'details substitute')
-                        user_choice = '\n'
-                        while user_choice == '\n':
-                            user_choice = input('press ENTER to continue ! or (q) to quit !')
-                        print('no other datas !')
+                        user_choice = 'a'
+                        while user_choice != 'c':
+                            user_choice = input('press (c) to continue ! or (q) to quit !')
+                            if user_choice not in ('c','q'):
+                                continue
+                            else:
+                                break    
                         if user_choice == 'q':
                             break
                         else:
-                            continue
+                            continue                       
                 else:
                     print('You have no historic for the moment')
             choice = input('go to the Main menu ? (y/n)')
